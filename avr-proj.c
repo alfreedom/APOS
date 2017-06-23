@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define VERSION  			"1.0.0"
+#define VERSION  			"1.1.0"
 #define AUTHOR  			"Alfredo Orozco"
 #define LAST_COMPILATION	"21-05-2017"
 
@@ -17,14 +17,14 @@ const char makefile_text[] = "\n# Name: Makefile\
 
 const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \nCLOCK        = 16000000\
-\nOBJECTS      = main.o\
+\nOBJECT_FILES = main.o\
 \n\
 \nPROGRAMMER   = -c avrispMKII -P usb\
 \nFUSES        = #-U hfuse:w:0xD9:m -U lfuse:w:0xDE:m\
 \nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)\
 \n\
 \n\
-\nCOMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)\
+\nCOMPILE = avr-g++ -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)\
 \n\
 \n# symbolic targets:\
 \nall: $(PROJECT_NAME).hex\
@@ -32,10 +32,18 @@ const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \n.c.o:\
 \n	$(COMPILE) -c $< -o $@\
 \n\
+\n\
+\n.cpp.o:\
+\n	$(COMPILE) -c $< -o $@\
+\n\
 \n.S.o:\
 \n	$(COMPILE) -x assembler-with-cpp -c $< -o $@\
 \n\
 \n.c.s:\
+\n	$(COMPILE) -S $< -o $@\
+\n\
+\n\
+\n.cpp.s:\
 \n	$(COMPILE) -S $< -o $@\
 \n\
 \nflash:	all\
@@ -50,10 +58,10 @@ const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \n	bootloadHID $(PROJECT_NAME).hex\
 \n\
 \nclean:\
-\n	rm -f $(PROJECT_NAME).hex $(PROJECT_NAME).elf $(OBJECTS)\
+\n	rm -f $(PROJECT_NAME).hex $(PROJECT_NAME).elf $(OBJECT_FILES)\
 \n\
-\n$(PROJECT_NAME).elf: $(OBJECTS)\
-\n	$(COMPILE) -o $(PROJECT_NAME).elf $(OBJECTS)\
+\n$(PROJECT_NAME).elf: $(OBJECT_FILES)\
+\n	$(COMPILE) -o $(PROJECT_NAME).elf $(OBJECT_FILES)\
 \n\
 \n$(PROJECT_NAME).hex: $(PROJECT_NAME).elf\
 \n	rm -f $(PROJECT_NAME).hex\

@@ -4,27 +4,32 @@
 #include <unistd.h>
 #include <string.h>
 
-#define VERSION  			"1.1.0"
+#define VERSION  			"1.2.0"
 #define AUTHOR  			"Alfredo Orozco"
 #define LAST_COMPILATION	"21-05-2017"
 
 
 const char makefile_text[] = "\n# Name: Makefile\
-\n# Author: <insert your name here>\
+\n# Author:    <insert your name here>\
 \n# Copyright: <insert your copyright message here>\
-\n# License: <insert your license reference here>\
+\n# License:   <insert your license reference here>\
 \n";
 
 const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \nCLOCK        = 16000000\
-\nOBJECT_FILES = main.o\
-\n\
 \nPROGRAMMER   = -c avrispMKII -P usb\
 \nFUSES        = #-U hfuse:w:0xD9:m -U lfuse:w:0xDE:m\
 \nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)\
 \n\
+\nOBJECT_FILES = main.o\
+\n#OBJECT_FILES += ./src/mySource.o\
 \n\
-\nCOMPILE = avr-g++ -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)\
+\nINCLUDEPATHS =  -I ./include\
+\n\
+\nCFLAGS = -ffunction-sections -fpermissive -std=c++11\
+\nLDFLAGS = -Wl,-gc-sections\
+\n\
+\nCOMPILE = avr-g++ $(CFLAGS) $(LDFLAGS) -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) $(INCLUDEPATHS)\
 \n\
 \n# symbolic targets:\
 \nall: $(PROJECT_NAME).hex\
@@ -159,5 +164,14 @@ int main(int argc, char const *argv[])
 	f = fopen(txt, "w");
 	fwrite(main_text,sizeof(char), strlen(main_text), f);
 	fclose(f);
+
+	strcpy(txt, argv[1]);
+	strcat(txt, "/include");
+	mkdir(txt, 0700);
+
+	strcpy(txt, argv[1]);
+	strcat(txt, "/src");
+	mkdir(txt, 0700);
+	
 	return 0;
 }

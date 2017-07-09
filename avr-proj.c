@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define VERSION  			"1.2.0"
+#define VERSION  			"1.2.1"
 #define AUTHOR  			"Alfredo Orozco"
 #define LAST_COMPILATION	"21-05-2017"
 
@@ -17,7 +17,7 @@ const char makefile_text[] = "\n# Name: Makefile\
 
 const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \nCLOCK        = 16000000\
-\nPROGRAMMER   = -c avrispMKII -P usb\
+\nPROGRAMMER   = -c usbasp -P usb\
 \nFUSES        = #-U hfuse:w:0xD9:m -U lfuse:w:0xDE:m\
 \nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)\
 \n\
@@ -115,12 +115,13 @@ const char main_text[] = "/*****************************************************
 \n 	}\
 \n\
 \n 	return 0;\
-\n }\
+\n}\
 \n";
 
-void show_help() {
-	printf("Usage: avr-proj <Project_Name>\n");
-	printf("\nAVR project %s\nCreates an AVR project template whith a makefile using avr-gcc toolchain.\n", VERSION);
+void show_help(char usage) {
+	if(usage)
+		printf("Usage: avr-proj <Project_Name>\n\n");
+	printf("AVR project %s\nCreates an AVR project template whith a makefile using avr-gcc toolchain.\n", VERSION);
 	printf("Created by %s <alfredoopa@gmail.com>\n", AUTHOR);
 
 }
@@ -134,7 +135,12 @@ int main(int argc, char const *argv[])
 	char prj_name[100];
 
 	if(argc < 2) {
-		show_help();
+		show_help(1);
+		return 0;
+	}
+
+	if(!strcmp(argv[1], "-v") || !strcmp(argv[1], "--version")) {
+		show_help(0);
 		return 0;
 	}
 

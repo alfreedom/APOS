@@ -10,7 +10,7 @@
 #include "blink_program.h"
 #include "makefile_template.h"
 
-#define VERSION  			"1.4.0"
+#define VERSION  			"1.3.0"
 #define AUTHOR  			"Alfredo Orozco de la Paz <alfredoopa@gmail.com>"
 #define LAST_COMPILATION	"27-07-2017"
 

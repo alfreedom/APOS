@@ -27,7 +27,6 @@ const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \n.c.o:\
 \n	$(COMPILE) -c $< -o $@\
 \n\
-\n\
 \n.cpp.o:\
 \n	$(COMPILE) -c $< -o $@\
 \n\
@@ -52,6 +51,9 @@ const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \n\
 \nreset:\
 \n	$(AVRDUDE)\
+\n\
+\nerase:\
+\n	$(AVRDUDE) -e\
 \n\
 \ninstall: flash fuse\
 \n\

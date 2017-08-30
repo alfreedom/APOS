@@ -10,7 +10,7 @@
 #include "blink_program.h"
 #include "makefile_template.h"
 
-#define VERSION  			"1.3.0"
+#define VERSION  			"1.3.1"
 #define AUTHOR  			"Alfredo Orozco de la Paz <alfredoopa@gmail.com>"
 #define LAST_COMPILATION	"27-07-2017"
 
@@ -110,7 +110,7 @@ int main(int argc, char const *argv[])
 	strcat(txt, "/src");
 	mkdir(txt, 0700);
 	
-	printf("avr-proj: Project \"%s\" created!\n", argv[1]);
+	printf("avr-proj: Project \"%s\" created!\n\n", argv[1]);
 
 	strcpy(txt, "cd ");
 	strcat(txt, argv[1]);

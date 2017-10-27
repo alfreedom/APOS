@@ -9,9 +9,9 @@ It offers a free alternative with improvements and extra options, which works wi
 ## Content
 
 
-1. [Installation](#1-installation)
+- [Installation](#installation)
 
-2. [Usage](#2-usage)
+- [Usage](#usage)
 	- [Project creation](#project-creation)
 	- [Project configuration](#project-configuration)
 	- [Project compilation](#project-compilation)
@@ -27,14 +27,14 @@ It offers a free alternative with improvements and extra options, which works wi
 
 *****
 
-## 1. Installation
+## Installation
 
 To install, dowload or clone this repository in your computer, the enter in a terminal to the folder "apos" and run the command "make" followed by the command "make install" as root: "sudo make install". 
 It will install the program on the system:
 
 
 ```bash
-$ git clone https://github.com/alfreedom/avr-project.git
+$ git clone https://github.com/alfreedom/apos.git
 $ cd apos
 $ make
 $ sudo make install
@@ -51,7 +51,7 @@ $ apos -v
 
 ******
 
-## 2. Usage
+## Usage
 
 This help show you how to create a project, configure it, and also how to add your own code. To create a new project run the command "apos" followed by the name of the project. 
 

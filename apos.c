@@ -8,8 +8,26 @@
 
 #include "templates.h"
 
+#define RED   				"\x1B[31m"
+#define BOLD_RED   		"\x1B[1;31m"
+#define GREEN   			"\x1B[32m"
+#define BOLD_GREEN		"\x1B[1;32m"
+#define YELLOW   			"\x1B[33m"
+#define BOLD_YELLOW		"\x1B[1;33m"
+#define BLUE   				"\x1B[34m"
+#define BOLD_BLUE			"\x1B[1;34m"
+#define MAGENTA   		"\x1B[35m"
+#define BOLD_MAGENTA	"\x1B[1;35m"
+#define CYAN   				"\x1B[36m"
+#define BOLD_CYAN			"\x1B[1;36m"
+#define WIHTE   			"\x1B[37m"
+#define BOLD_WIHTE		"\x1B[1;37m"
+#define RESET 			  "\x1B[0m"
+#define BOLD_RESET		"\x1B1;[0m"
+
 #define VERSION  			"1.5"
-#define AUTHOR  			"Alfredo Orozco de la Paz <alfredoopa@gmail.com>"
+#define AUTHOR  			"Alfredo Orozco de la Paz"
+#define AUTHOR_EMAIL  "alfredoopa@gmail.com"
 #define LAST_COMPILATION	"26-10-2017"
 
 typedef struct {
@@ -29,42 +47,59 @@ typedef struct {
 char txt[2048];
 
 void show_version(){
-	printf("APOS (AVR Project Open Source) v%s\n\n", VERSION);
-	printf("Creates an AVR project template based on a makefile using avr-gcc toolchain.\n\n");
+
+printf( BOLD_RED "      ___           ___           ___           ___     									\n");
+printf("     /\\  \\         /\\  \\         /\\  \\         /\\  \\    						\n");
+printf("    /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\   						\n");
+printf("   /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\ \\  \\  				\n");
+printf("  /::\\~\\:\\  \\   /::\\~\\:\\  \\   /:/  \\:\\  \\   _\\:\\~\\ \\  \\ 		\n");
+printf(" /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/ \\:\\__\\ /\\ \\:\\ \\ \\__\\	\n");
+printf(" \\/__\\:\\/:/  / \\/__\\:\\/:/  / \\:\\  \\ /:/  / \\:\\ \\:\\ \\/__/			\n");
+printf("      \\::/  /       \\::/  /   \\:\\  /:/  /   \\:\\ \\:\\__\\  						\n");
+printf("      /:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  /  								\n");
+printf("     /:/  /                     \\::/  /       \\::/  /   \n");
+printf("     \\/__/                       \\/__/         \\/__/    \n\n");
+
+
+	printf(RESET GREEN "APOS" RESET " (AVR Project Open Source) v%s\n\n", VERSION);
+	printf("Creates an AVR project template based on a makefile using the avr-gcc toolchain and avrdude.\n\n");
 }
 void show_help() {
 	show_version();
-	printf("   Usage: apos [OPTIONS] <Project_Name>\n\n");
-	printf("   OPTIONS:\n\n");
-	printf("     -b         Create a blink project template.\n");
-	printf("     -d         Define the Microcontroller (e.g atmega328p).\n");
-	printf("     -e         Define the Extended Fuse  (2 digit hex format).\n");
-	printf("     -f         Define the CPU Frequency (in Hz).\n");
-	printf("     -g         Initialize a GIT repository in the project folder.\n");
-	printf("     -h         Define the Low Fuse  (2 digit hex format).\n");
-	printf("     -l         Define the High Fuse (2 digit hex format).\n");
-	printf("     -p         Define the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.).\n");
-	printf("     -v         Show the apos version.\n");
-	printf("     -?         Show this help.\n\n");
+	printf(RESET "   Usage:" RED " apos " RESET "[" YELLOW "OPTIONS" RESET "] <" CYAN "Project_Name" RESET ">\n\n");
+	printf(BOLD_YELLOW "--------------------------------------------\n\n" RESET);
+	printf(BOLD_YELLOW "   OPTIONS:\n\n" RESET);
+	printf(YELLOW "     -b" RESET "    Create a blink project template\n");
+	printf(YELLOW "     -d" RESET "    Define the Microcontroller (e.g atmega328p)\n");
+	printf(YELLOW "     -e" RESET "    Define the Extended Fuse  (2 digit hex format)\n");
+	printf(YELLOW "     -f" RESET "    Define the CPU Frequency (in Hz)\n");
+	printf(YELLOW "     -g" RESET "    Initialize a GIT repository in the project folder\n");
+	printf(YELLOW "     -h" RESET "    Define the Low Fuse  (2 digit hex format)\n");
+	printf(YELLOW "     -l" RESET "    Define the High Fuse (2 digit hex format)\n");
+	printf(YELLOW "     -p" RESET "    Define the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)\n");
+	printf(YELLOW "     -v" RESET "    Show the " RED "apos " RESET "version\n");
+	printf(YELLOW "     -?" RESET "    Show this help\n\n");
 	
-	printf("   Makefile Options:\n\n");
-	printf("     all        Compile al the source file and generates the .hex file.\n");
-	printf("     clean      Clean the project.\n");
-	printf("     erase      Erase the flash memory into the AVR\n");
-	printf("     fuses      Program the low, high and extended fuses.\n");
-	printf("     install    Program the fuses and flash memory into the AVR\n");
-	printf("     reset      Resets the AVR microcontroller.\n");
-	printf("     disasm     Disassemble the .hex file and generate de .asm file.\n\n");
+	printf(BOLD_CYAN "--------------------------------------------\n\n" RESET);
+	printf(BOLD_CYAN "   Makefile Options:\n\n" RESET);
+	printf(CYAN "     all"  	 RESET "        Compile al the source file and generates the .hex file\n");
+	printf(CYAN "     clean"   RESET "      Clean the project\n");
+	printf(CYAN "     erase"   RESET "      Erase the flash memory into the AVR\n");
+	printf(CYAN "     fuses"   RESET "      Program the low, high and extended fuses\n");
+	printf(CYAN "     install" RESET "    Program the fuses and flash memory into the AVR\n");
+	printf(CYAN "     reset"   RESET "      Resets the AVR microcontroller\n");
+	printf(CYAN "     disasm"  RESET "     Disassemble the .hex file and generate de .asm file\n\n");
 	
-	printf("   Usage example: create a blink project\n\n");
-	printf("     Empty Project:            apos blink\n");
-	printf("     Create a Blink Project:   apos -b blink\n");
-	printf("     Define MCU:               apos -d atmega32 blink\n");
-	printf("     Define F_CPU:             apos -d atmega32 -f 16000000 blink\n");
-	printf("     Define Programmer:        apos -d atmega32 -f 16000000 -p usbtiny blink\n");
-	printf("     Define Fuses:             apos -d atmega32 -f 16000000 -p usbtiny -e ff -l de -h D9 blink\n");
+	printf(BOLD_MAGENTA "--------------------------------------------\n\n" RESET);
+	printf(BOLD_MAGENTA "   Examples: create a blink project\n\n" RESET);
+	printf("     Empty project:            " RED "apos " CYAN "blink\n" RESET);
+	printf("     Create a Blink project:   " RED "apos " YELLOW "-b " CYAN "blink\n" RESET);
+	printf("     Define MCU:               " RED "apos " YELLOW "-d " RESET "atmega32 " CYAN "blink\n" RESET);
+	printf("     Define CPU frequency:     " RED "apos " YELLOW "-d " RESET "atmega32 " YELLOW "-f " RESET "16000000 " CYAN "blink\n" RESET);
+	printf("     Define programmer:        " RED "apos " YELLOW "-d " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " CYAN "blink\n" RESET);
+	printf("     Define fuses:             " RED "apos " YELLOW "-d " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " YELLOW "-e "RESET"ff "YELLOW"-l "RESET"de "YELLOW"-h "RESET"D9 "CYAN"blink\n" RESET);
 	printf("                \n");
-	printf(" Created by %s\n", AUTHOR);
+	printf(RESET" Created by " GREEN "%s <" CYAN "%s" GREEN ">\n" RESET, AUTHOR, AUTHOR_EMAIL);
 
 }
 
@@ -86,7 +121,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 		{
 			if(!option[1])
 			{
-				printf("apos: [error] invalid option %s\n\n", argv[i]);
+				printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
 				return 0;
 			}
 			switch(option[1]){
@@ -130,7 +165,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 				case '?': options_out->help = 1; break;
 				case 'b': options_out->blink_template = 1; break;
 				case 'g': options_out->create_git = 1; break;
-				default: printf("apos: [e_rror] invalid option %s\n\n", argv[i]);
+				default: printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
 				return 0;
 				
 			}
@@ -148,7 +183,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 	else{
 		if(!options_out->version && !options_out->help)
 		{
-			printf("apos: [error] missing project name\n\n");
+			printf(RED "apos" RESET ": [" YELLOW "error" RESET "] missing project name\n\n" RESET);
 			return 0;
 		}
 	}

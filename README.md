@@ -57,6 +57,17 @@ This help show you how to create a project, configure it, and also how to add yo
 
 This will create a folder containing the main.c file, the folders 'src', 'include' and the Makefile.
 
+<span><span style="color: red;">*Important!</span> You need to have installed the avr-gcc compiler and the avrdude program, to install it run someone of the commands below depending of your operating system.
+</span>
+##### Debian and Debian based
+```bash
+$ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
+```
+##### Fedora and RedHat
+```bash
+$ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
+```
+<br>
 #### Project creation 
 To create a empty project, type in a terminal the command:
 
@@ -71,22 +82,21 @@ To create a project for the ATmega328 that run at 16MHz and will be flashed with
 $ apos -d atmega328p -f 16000000 -p usbtiny my_proyect
 ```
 If you want to create a git repository, add the "-g" option before the project name. In the same way add the "-b" option if you want to create the project with a blink program template.
-
+<br>
 #### Project Configuration
 Do you need to change the microcontroller frequency, model, programmer, fuses or another configuration? you only need to edit the lines from 6 to 11 of the project Makefile.
 
-
-```bash
-
-PROJECT_NAME = my_project
-DEVICE       = atmega328p
-CLOCK        = 16000000
-PROGRAMMER   = -c usbasp -P usb
-FUSES        = -U hfuse:w:0xD9:m -U lfuse:w:0xDE:m #-U efuse:w:0xFF:m
-AVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)
+```Makefile
+ 5
+ 6 PROJECT_NAME = my_project
+ 7 DEVICE       = atmega328p
+ 8 CLOCK        = 16000000
+ 9 PROGRAMMER   = -c usbasp -P usb
+10 FUSES        = -U hfuse:w:0xD9:m -U lfuse:w:0xDE:m #-U efuse:w:0xFF:m
+11 AVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)
+12
 
 ```
-
 #### Project Compilation 
 To generate the .hex file, you need to open a terminal and go to the project folder, then type the command:
 
@@ -94,24 +104,24 @@ To generate the .hex file, you need to open a terminal and go to the project fol
 $ make
 ```
 If all is ok, the compilation information will be shown in the terminal with usage data from the flash memory, ram and eeprom.
-
+<br>
 #### Add new sources to project 
 Adding you own hardware drivers and libraries is very simple, only put your header file in the 'include' folder or another subfolder, and the source files in the 'src' folder os subfolder.
 
 The final step is uncomment and copy the lines 14 and 17 of the 'Makefile' to add your source files and include paths.
 
-```bash
-
-OBJECT_FILES = main.o
-#OBJECT_FILES += ./src/mySource.o
-
-INCLUDEPATHS =  -I ./include
-#INCLUDEPATHS += -I ./include/myFolder
-
+```Makefile
+12
+13 OBJECT_FILES = main.o
+14 #OBJECT_FILES += ./src/mySource.o
+15
+16 INCLUDEPATHS =  -I ./include
+17 #INCLUDEPATHS += -I ./include/myFolder
+18
 ```
 
-Save changes and type make to compile your new code.
-
+Save changes and type "make" to compile your new code.
+<br>
 *****
 
 ## Makefile targets 

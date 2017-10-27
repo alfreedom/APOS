@@ -8,4 +8,6 @@ clean:
 	rm -f avr-proj
 	
 install: avr-proj
-	cp avr-proj /usr/local/bin
+	mkdir -p /opt/avr-project
+	cp avr-proj /opt/avr-project
+	ln -f -s /opt/avr-project/avr-proj /usr/local/bin/avr-proj

@@ -1,20 +1,82 @@
 
-const char makefile_text1[] = "\n# Name: Makefile\
+const char empty_template_body[] = "\n *       Author:  YOUR_NAME\
+\n *      License:  YOUR_LICENSE\
+\n *\
+\n * Description:\
+\n *  YOUR PROGRAM DESCRIPTION HERE.\
+\n * \
+\n *****************************************************/\
+\n#include <avr/io.h> \
+\n#include <util/delay.h> \
+\n\
+\nvoid AVRInit()\
+\n{\
+\n	// YOUR CODE INITIALIZATION\
+\n}\
+\n\
+\nint main()\
+\n{\
+\n	// Initialize the AVR modules\
+\n	AVRInit();\
+\n\
+\n	// Infinite loop\
+\n	while(1)\
+\n	{\
+\n		// YOUR CODE HERE\
+\n	}\
+\n\
+\n	return 0;\
+\n}\
+\n";
+
+
+const char blink_program[] = "\n *       Author:  YOUR_NAME\
+\n *      License:  YOUR_LICENSE\
+\n *\
+\n * Description:\
+\n *  Blink 8 leds connected on the PORTB of the AVR.\
+\n * \
+\n *****************************************************/\
+\n#include <avr/io.h> \
+\n#include <util/delay.h> \
+\n\
+\nvoid AVRInit()\
+\n{\
+\n	DDRB = 0xFF;  // PORTB as Output\
+\n}\
+\n\
+\nint main()\
+\n{\
+\n	// Initialize the AVR modules\
+\n	AVRInit();\
+\n\
+\n	// Infinite loop\
+\n	while(1)\
+\n	{\
+\n		PORTB = 0xFF;     // PORTB High\
+\n		_delay_ms(1000);  // Wait 1s\
+\n		PORTB = 0x00;     // PORTB Low\
+\n		_delay_ms(1000);  // Wait 1s\
+\n	}\
+\n\
+\n	return 0;\
+\n}\
+\n";
+
+
+const char makefile_header[] = "# Name: Makefile\
 \n# Author:    <insert your name here>\
 \n# Copyright: <insert your copyright message here>\
 \n# License:   <insert your license reference here>\
 \n";
 
-const char makefile_text2[] = "\nDEVICE       = atmega328p\
-\nCLOCK        = 16000000\
-\nPROGRAMMER   = -c usbasp -P usb\
-\nFUSES        = #-U hfuse:w:0xD9:m -U lfuse:w:0xDE:m\
-\nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)\
+const char makefile_body[] = "\nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)\
 \n\
 \nOBJECT_FILES = main.o\
 \n#OBJECT_FILES += ./src/mySource.o\
 \n\
 \nINCLUDEPATHS =  -I ./include\
+\n#INCLUDEPATHS += -I ./include/myFolder\
 \n\
 \nCFLAGS = -ffunction-sections -fpermissive -std=c++11\
 \nLDFLAGS = -Wl,-gc-sections\
@@ -36,7 +98,6 @@ const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \n.c.s:\
 \n	$(COMPILE) -S $< -o $@\
 \n\
-\n\
 \n.cpp.s:\
 \n	$(COMPILE) -S $< -o $@\
 \n\
@@ -51,9 +112,6 @@ const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \n\
 \nreset:\
 \n	$(AVRDUDE)\
-\n\
-\nerase:\
-\n	$(AVRDUDE) -e\
 \n\
 \ninstall: flash fuse\
 \n\
@@ -74,3 +132,4 @@ const char makefile_text2[] = "\nDEVICE       = atmega328p\
 \ncpp:\
 \n	$(COMPILE) -E main.c\
 \n" ;
+

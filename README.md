@@ -68,7 +68,8 @@ $ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
 $ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
 ```
 <br>
-#### Project creation 
+
+#### Project creation
 To create a empty project, type in a terminal the command:
 
 ```bash

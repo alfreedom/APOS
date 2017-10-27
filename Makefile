@@ -1,13 +1,13 @@
 
 
 
-all: avr-proj.c
-	gcc avr-proj.c -o avr-proj
+all: apos.c
+	gcc apos.c -o apos
 
 clean:
-	rm -f avr-proj
+	rm -f apos
 	
-install: avr-proj
-	mkdir -p /opt/avr-project
-	cp avr-proj /opt/avr-project
-	ln -f -s /opt/avr-project/avr-proj /usr/local/bin/avr-proj
+install: all apos
+	mkdir -p /opt/aposect
+	cp apos /opt/aposect
+	ln -f -s /opt/aposect/apos /usr/local/bin/apos

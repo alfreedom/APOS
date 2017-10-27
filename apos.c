@@ -8,7 +8,7 @@
 
 #include "templates.h"
 
-#define VERSION  			"1.4"
+#define VERSION  			"1.5"
 #define AUTHOR  			"Alfredo Orozco de la Paz <alfredoopa@gmail.com>"
 #define LAST_COMPILATION	"26-10-2017"
 
@@ -29,12 +29,12 @@ typedef struct {
 char txt[2048];
 
 void show_version(){
-	printf("AVR Project v%s\n\n", VERSION);
+	printf("APOS (AVR Project Open Source) v%s\n\n", VERSION);
 	printf("Creates an AVR project template based on a makefile using avr-gcc toolchain.\n\n");
 }
 void show_help() {
 	show_version();
-	printf("   Usage: avr-proj [OPTIONS] <Project_Name>\n\n");
+	printf("   Usage: apos [OPTIONS] <Project_Name>\n\n");
 	printf("   OPTIONS:\n\n");
 	printf("     -b         Create a blink project template.\n");
 	printf("     -d         Define the Microcontroller (e.g atmega328p).\n");
@@ -44,8 +44,8 @@ void show_help() {
 	printf("     -h         Define the Low Fuse  (2 digit hex format).\n");
 	printf("     -l         Define the High Fuse (2 digit hex format).\n");
 	printf("     -p         Define the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.).\n");
-	printf("     -v         Show the avr-proj version.\n");
-	printf("     -?         Show this help.\n\n\n");
+	printf("     -v         Show the apos version.\n");
+	printf("     -?         Show this help.\n\n");
 	
 	printf("   Makefile Options:\n\n");
 	printf("     all        Compile al the source file and generates the .hex file.\n");
@@ -56,15 +56,15 @@ void show_help() {
 	printf("     reset      Resets the AVR microcontroller.\n");
 	printf("     disasm     Disassemble the .hex file and generate de .asm file.\n\n");
 	
-	printf("Usage example: create a blink project\n\n");
-	printf("    Empty Project:            avr-proj blink\n");
-	printf("    Create a Blink Project:   avr-proj -b blink\n");
-	printf("    Define MCU:               avr-proj -d atmega32 blink\n");
-	printf("    Define F_CPU:             avr-proj -d atmega32 -f 16000000 blink\n");
-	printf("    Define Programmer:        avr-proj -d atmega32 -f 16000000 -p usbtiny blink\n");
-	printf("    Define Fuses:             avr-proj -d atmega32 -f 16000000 -p usbtiny -e ff -l de -h D9 blink\n");
+	printf("   Usage example: create a blink project\n\n");
+	printf("     Empty Project:            apos blink\n");
+	printf("     Create a Blink Project:   apos -b blink\n");
+	printf("     Define MCU:               apos -d atmega32 blink\n");
+	printf("     Define F_CPU:             apos -d atmega32 -f 16000000 blink\n");
+	printf("     Define Programmer:        apos -d atmega32 -f 16000000 -p usbtiny blink\n");
+	printf("     Define Fuses:             apos -d atmega32 -f 16000000 -p usbtiny -e ff -l de -h D9 blink\n");
 	printf("                \n");
-	printf("Created by %s\n", AUTHOR);
+	printf(" Created by %s\n", AUTHOR);
 
 }
 
@@ -86,7 +86,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 		{
 			if(!option[1])
 			{
-				printf("avr-proj: [error] invalid option %s\n\n", argv[i]);
+				printf("apos: [error] invalid option %s\n\n", argv[i]);
 				return 0;
 			}
 			switch(option[1]){
@@ -130,7 +130,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 				case '?': options_out->help = 1; break;
 				case 'b': options_out->blink_template = 1; break;
 				case 'g': options_out->create_git = 1; break;
-				default: printf("avr-proj: [e_rror] invalid option %s\n\n", argv[i]);
+				default: printf("apos: [e_rror] invalid option %s\n\n", argv[i]);
 				return 0;
 				
 			}
@@ -146,8 +146,11 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 			strcpy(options_out->project_name, argv[argc-1]);
 	}
 	else{
-		printf("avr-proj: [error] missing project name\n\n");
-		return 0;
+		if(!options_out->version && !options_out->help)
+		{
+			printf("apos: [error] missing project name\n\n");
+			return 0;
+		}
 	}
 	return 1;
 }
@@ -220,7 +223,7 @@ void create_folder_project(options_t *options)
 
 	if(f=fopen(options->project_name, "r"))
 	{
-		printf("avr-proj: [error] The project \"%s\" already exist!\n", options->project_name);
+		printf("apos: [error] The project \"%s\" already exist!\n", options->project_name);
 		fclose(f);
 		exit(1);
 	}
@@ -269,7 +272,7 @@ int main(int argc, char const *argv[])
 		return 0;
 	}
 	if(!parse_result){
-		printf("Write  avr-proj -?  to see help.\n");
+		printf("Write  apos -?  to see help.\n");
 		return 0;
 	}
 
@@ -287,7 +290,7 @@ int main(int argc, char const *argv[])
 
 	create_project(&options);
 
-	printf("\navr-proj: Project \"%s\" created!\n\n", options.project_name);
+	printf("\napos: Project \"%s\" created!\n\n", options.project_name);
 
 	return 0;
 }

@@ -6,17 +6,17 @@ Creates an AVR project template for linux systems using makefile.
 2. [Installation](#2-installation)
 
 3. [Usage](#3-usage)
-+[Project creation](#project-creatin)
-+[Project configuration](#project-configuration)
-+[Project compilation](#project-compilation)
-+[Add new sources to project ](#add-new-sources-to-project)
+	*[Project creation](#project-creation)
+	*[Project configuration](#project-configuration)
+	*[Project compilation](#project-compilation)
+	*[Add new sources to project ](#add-new-sources-to-project)
 
 4. [Makefile targets](#4-makefile-targets)
-+[Flash the firmware](#flash-the-firmware)
-+[Erase chip](#erase-chip)
-+[Program reset](#program-reset)
-+[Write fuses](#write-fuses)
-+[Firmware install](#firmware-install)
+	*-[Flash the firmware](#flash-the-firmware)
+	*-[Erase chip](#erase-chip)
+	*.[Program reset](#program-reset)
+	*-[Write fuses](#write-fuses)
+	*-[Firmware install](#firmware-install)
 
 *****
 

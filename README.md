@@ -2,7 +2,7 @@
 
 Creates an AVR project template for Linux systems based on a Makefile.
 
-This project is inspired by the apos program that includes the CrossPack for AVR software package for MacOS.
+This project is inspired by the avr-proj program that includes the CrossPack for AVR software package for MacOS.
 
 It offers a free alternative with improvements and extra options, which works with Linux operating systems in a simple but very useful program.
 
@@ -65,7 +65,7 @@ $ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
 ```
 ##### Fedora and RedHat
 ```bash
-$ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
+$ sudo yum install  gcc-avr binutils-avr avr-libc avrdude
 ```
 <br>
 

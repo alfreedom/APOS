@@ -78,7 +78,7 @@ void show_help() {
 	printf(YELLOW "     -l" RESET "    Define the High Fuse (2 digit hex format)\n");
 	printf(YELLOW "     -p" RESET "    Define the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)\n");
 	printf(YELLOW "     -v" RESET "    Show the " RED "apos " RESET "version\n");
-	printf(YELLOW "     -?" RESET "    Show this help\n\n");
+	printf(YELLOW "  -?, ?" RESET "    Show this help\n\n");
 	
 	printf(BOLD_CYAN "--------------------------------------------\n\n" RESET);
 	printf(BOLD_CYAN "   Makefile Options:\n\n" RESET);
@@ -109,7 +109,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 	// Set the default options
 	strcpy(options_out->device, "atmega328p");
 	strcpy(options_out->f_cpu, "16000000");
-	strcpy(options_out->programmer, "usbasp");
+	strcpy(options_out->programmer, "usbtiny");
 	strcpy(options_out->high_f, "D9");
 	strcpy(options_out->low_f, "DE");
 	strcpy(options_out->extended_f, "FF");
@@ -117,6 +117,11 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 	for(int i = 1; i< argc; i++)
 	{
 		char const *option = argv[i];
+		if (*option == '?')
+		{
+			options_out->help = 1;
+			return 1;
+		}
 		if(option[0] == '-')
 		{
 			if(!option[1])
@@ -218,12 +223,12 @@ void create_mainfile(options_t *options)
 	f = fopen(txt, "w");
 	if(options->blink_template)
 	{
-		fprintf(f,"/******************************************************\n * main.c\n *\n * Program Name:  Blink\n *         Date:  %d-%d-%d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday );
+		fprintf(f,"/******************************************************\n * main.c\n *\n * Program Name:  Blink\n *         Date:  %04d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday );
 		fwrite(blink_program, sizeof(char), strlen(blink_program), f);
 	}
 	else
 	{
-		fprintf(f,"/******************************************************\n * main.c\n *\n * Program Name:  %s\n *         Date:  %d-%d-%d", options->project_name, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday );
+		fprintf(f,"/******************************************************\n * main.c\n *\n * Program Name:  %s\n *         Date:  %04d-%02d-%02d", options->project_name, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday );
 		fwrite(empty_template_body, sizeof(char), strlen(empty_template_body), f);
 	}
 	fclose(f);
@@ -253,7 +258,7 @@ void create_folder_project(options_t *options)
 	for (int i = 0; i < strlen(options->project_name); ++i)
 	{
 		if(options->project_name[i]==' ')
-		options->project_name[i]= '_';
+			options->project_name[i]= '_';
 	}
 
 	if(f=fopen(options->project_name, "r"))
@@ -273,6 +278,7 @@ void create_folder_project(options_t *options)
 	strcat(txt, "/src");
 	mkdir(txt, 0700);
 }
+
 void create_project(options_t *options) 
 {
 	create_folder_project(options);
@@ -283,6 +289,7 @@ void create_project(options_t *options)
 		create_gitrepo(options);
 
 }
+
 int main(int argc, char const *argv[])
 {
 	int parse_result;
@@ -307,7 +314,7 @@ int main(int argc, char const *argv[])
 		return 0;
 	}
 	if(!parse_result){
-		printf("Write  apos -?  to see help.\n");
+		printf("Write  apos " YELLOW "?" RESET " or " YELLOW "-?" RESET "  to see help.\n");
 		return 0;
 	}
 

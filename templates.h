@@ -11,7 +11,9 @@ const char empty_template_body[] = "\n *       Author:  YOUR_NAME\
 \n\
 \nvoid AVRInit()\
 \n{\
+\n\
 \n	// YOUR CODE INITIALIZATION\
+\n\
 \n}\
 \n\
 \nint main()\
@@ -75,7 +77,8 @@ const char makefile_body[] = "\nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE
 \nOBJECT_FILES = main.o\
 \n#OBJECT_FILES += ./src/mySource.o\
 \n\
-\nINCLUDEPATHS =  -I ./include\
+\nINCLUDEPATHS =  -I .\
+\nINCLUDEPATHS += -I ./include\
 \n#INCLUDEPATHS += -I ./include/myFolder\
 \n\
 \nCFLAGS = -ffunction-sections -fpermissive -std=c++11\

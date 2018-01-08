@@ -72,7 +72,7 @@ const char makefile_header[] = "# Name: Makefile\
 \n# License:   <insert your license reference here>\
 \n";
 
-const char makefile_body[] = "\nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)\
+const char makefile_body[] = "\nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE) -B 2\
 \n\
 \nOBJECT_FILES = main.o\
 \n#OBJECT_FILES += ./src/mySource.o\

@@ -48,15 +48,15 @@ char txt[2048];
 
 void show_version(){
 
-printf( BOLD_RED "      ___           ___           ___           ___     									\n");
+printf( BOLD_MAGENTA "      ___           ___           ___           ___     									\n");
 printf("     /\\  \\         /\\  \\         /\\  \\         /\\  \\    						\n");
 printf("    /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\   						\n");
 printf("   /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\ \\  \\  				\n");
-printf("  /::\\~\\:\\  \\   /::\\~\\:\\  \\   /:/  \\:\\  \\   _\\:\\~\\ \\  \\ 		\n");
+printf(BOLD_CYAN "  /::\\~\\:\\  \\   /::\\~\\:\\  \\   /:/  \\:\\  \\   _\\:\\~\\ \\  \\ 		\n");
 printf(" /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/ \\:\\__\\ /\\ \\:\\ \\ \\__\\	\n");
 printf(" \\/__\\:\\/:/  / \\/__\\:\\/:/  / \\:\\  \\ /:/  / \\:\\ \\:\\ \\/__/			\n");
 printf("      \\::/  /       \\::/  /   \\:\\  /:/  /   \\:\\ \\:\\__\\  						\n");
-printf("      /:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  /  								\n");
+printf(BOLD_YELLOW"      /:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  /  								\n");
 printf("     /:/  /                     \\::/  /       \\::/  /   \n");
 printf("     \\/__/                       \\/__/         \\/__/    \n\n");
 
@@ -82,13 +82,13 @@ void show_help() {
 	
 	printf(BOLD_CYAN "--------------------------------------------\n\n" RESET);
 	printf(BOLD_CYAN "   Makefile Options:\n\n" RESET);
-	printf(CYAN "     all"  	 RESET "        Compile al the source file and generates the .hex file\n");
+	printf(CYAN "     all"  	 RESET "        Compile all the source file and generates the .hex file\n");
 	printf(CYAN "     clean"   RESET "      Clean the project\n");
 	printf(CYAN "     erase"   RESET "      Erase the flash memory into the AVR\n");
 	printf(CYAN "     fuses"   RESET "      Program the low, high and extended fuses\n");
 	printf(CYAN "     install" RESET "    Program the fuses and flash memory into the AVR\n");
 	printf(CYAN "     reset"   RESET "      Resets the AVR microcontroller\n");
-	printf(CYAN "     disasm"  RESET "     Disassemble the .hex file and generate de .asm file\n\n");
+	printf(CYAN "     disasm"  RESET "     Disassemble the .hex file and generate the .asm file\n\n");
 	
 	printf(BOLD_MAGENTA "--------------------------------------------\n\n" RESET);
 	printf(BOLD_MAGENTA "   Examples: create a blink project\n\n" RESET);

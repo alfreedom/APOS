@@ -63,10 +63,11 @@ printf("     \\/__/                       \\/__/         \\/__/    \n\n");
 
 	printf(RESET GREEN "APOS" RESET " (AVR Project Open Source) v%s\n\n", VERSION);
 	printf("Creates an AVR project template based on a makefile using the avr-gcc toolchain and avrdude.\n\n");
+	printf(RESET "   Usage:" RED " apos " RESET "[" YELLOW "OPTIONS" RESET "] <" CYAN "Project_Name" RESET ">\n\n");
+	printf("   -? or ? option Shows help\n\n");
 }
 void show_help() {
 	show_version();
-	printf(RESET "   Usage:" RED " apos " RESET "[" YELLOW "OPTIONS" RESET "] <" CYAN "Project_Name" RESET ">\n\n");
 	printf(BOLD_YELLOW "--------------------------------------------\n\n" RESET);
 	printf(BOLD_YELLOW "   OPTIONS:\n\n" RESET);
 	printf(YELLOW "     -b" RESET "    Create a blink project template\n");
@@ -99,7 +100,7 @@ void show_help() {
 	printf("     Define programmer:        " RED "apos " YELLOW "-d " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " CYAN "blink\n" RESET);
 	printf("     Define fuses:             " RED "apos " YELLOW "-d " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " YELLOW "-e "RESET"ff "YELLOW"-l "RESET"de "YELLOW"-h "RESET"D9 "CYAN"blink\n" RESET);
 	printf("                \n");
-	printf(RESET" Created by " GREEN "%s <" CYAN "%s" GREEN ">\n" RESET, AUTHOR, AUTHOR_EMAIL);
+	printf(RESET" Created by " BOLD_MAGENTA "%s" CYAN " <" YELLOW "%s" CYAN ">\n" RESET, AUTHOR, AUTHOR_EMAIL);
 
 }
 
@@ -297,7 +298,7 @@ int main(int argc, char const *argv[])
 
 	// If not pass arguments to program show the help
 	if(argc < 2) {
-		show_help();
+		show_version();
 		return 0;
 	}
 

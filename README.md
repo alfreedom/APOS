@@ -70,7 +70,7 @@ $ sudo pacman -Sy  avr-gcc avr-binutils avr-libc avrdude
 
 <br>
 
-#### Add udev rules
+## Add udev rules
 
 To use the software programmers with avrdude without root permissions, 
 it is necessary to add the rules of programmers to the system. Depending 

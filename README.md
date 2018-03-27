@@ -10,7 +10,8 @@ It offers a free alternative with improvements and extra options, which works wi
 
 
 - [Installation](#installation)
-
+- [Toolchain Installation](#toolchain-installation)
+- [Add udev rules](#add-udev-rules)
 - [Usage](#usage)
 	- [Project creation](#project-creation)
 	- [Project configuration](#project-configuration)
@@ -51,14 +52,9 @@ $ apos -v
 
 ******
 
-## Usage
+## Toolchain Installation
 
-This help show you how to create a project, configure it, and also how to add your own code. To create a new project run the command "apos" followed by the name of the project. 
-
-This will create a folder containing the main.c file, the folders 'src', 'include' and the Makefile.
-
-<span><span style="color: red;">*Important!</span> You need to have installed the avr-gcc toolchain and the avrdude program to compile the avr code. To install it run someone of the commands below depending of your operating system.
-</span>
+You need to have installed the avr-gcc toolchain and the avrdude program to compile the avr code. To install it run someone of the commands below depending of your operating system.
 ##### Debian and derivates
 ```bash
 $ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
@@ -111,6 +107,12 @@ To reload the device rules, execute the below commands:
 sudo udevadm control --reload 
 sudo udevadm trigger --action=add
 ```
+
+## Usage 
+This help show you how to create a project, configure it, and also how to add your own code. To create a new project run the command "apos" followed by the name of the project. 
+
+This will create a folder containing the main.c file, the folders 'src', 'include' and the Makefile.
+
 #### Project creation
 To create a empty project, type in a terminal the command:
 

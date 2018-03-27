@@ -57,18 +57,60 @@ This help show you how to create a project, configure it, and also how to add yo
 
 This will create a folder containing the main.c file, the folders 'src', 'include' and the Makefile.
 
-<span><span style="color: red;">*Important!</span> You need to have installed the avr-gcc compiler and the avrdude program, to install it run someone of the commands below depending of your operating system.
+<span><span style="color: red;">*Important!</span> You need to have installed the avr-gcc toolchain and the avrdude program to compile the avr code. To install it run someone of the commands below depending of your operating system.
 </span>
-##### Debian and Debian based
+##### Debian and derivates
 ```bash
 $ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
 ```
 ##### Fedora and RedHat
 ```bash
-$ sudo yum install  gcc-avr binutils-avr avr-libc avrdude
+$ sudo yum install  avr-gcc avr-binutils avr-libc avrdude
 ```
+##### Arch and derivates
+```bash
+$ sudo pacman -Sy  avr-gcc avr-binutils avr-libc avrdude
+```
+
 <br>
 
+#### Add udev rules
+
+To use the software programmers with avrdude without root permissions, 
+it is necessary to add the rules of programmers to the system. Depending 
+on the version of linux, you must change the name of the group to which the 
+device rules belong. For Debian and derivatives the __*"dialout"*__ group is used, 
+for Fedora it is __*"users"*__ and for Arch it is __*"uucp"*__.
+
+The file must be created in the path "/etc/udev/rules.d/", with a name, for example, 
+"90-avr.rules":
+
+```bash
+sudo nano /etc/udev/rules.d/90-avr.rules
+```
+
+And once the file is created, paste the following content by modifying the name of the group depending on the version of the operating system:
+
+```bash
+# Programmers for avrdude
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2104", GROUP="uucp", MODE="0660" # AVRISP mkII
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2107", GROUP="uucp", MODE="0660" # AVR-Dragon
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2103", GROUP="uucp", MODE="0660" # JTAG ICE mkII
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2106", GROUP="uucp", MODE="0660" # STK600
+ATTR{idVendor}=="16c0", ATTR{idProduct}=="05dc", GROUP="uucp", MODE="0660" # USBASP von www.fischl.de
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2ffa", GROUP="uucp", MODE="0660" # AT90USB
+ATTR{idVendor}=="10c4", ATTR{idProduct}=="ea60", GROUP="uucp", MODE="0660" # AVR910
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2105", GROUP="uucp", MODE="0660" # AVR ONE
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="210d", GROUP="uucp", MODE="0660" # Atmel XPLAIN CDC Gateway
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2ffb", GROUP="uucp", MODE="0660" # AT90USB AVR DFU bootloader
+ATTR{idVendor}=="1781", ATTR{idProduct}=="0c9f", GROUP="uucp", MODE="0660" # usbtiny
+```
+
+To reload the device rules, execute the below commands:
+```bash
+sudo udevadm control --reload 
+sudo udevadm trigger --action=add
+```
 #### Project creation
 To create a empty project, type in a terminal the command:
 

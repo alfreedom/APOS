@@ -8,27 +8,27 @@
 
 #include "templates.h"
 
-#define RED   				"\x1B[31m"
-#define BOLD_RED   		"\x1B[1;31m"
-#define GREEN   			"\x1B[32m"
+#define RED				"\x1B[31m"
+#define BOLD_RED		"\x1B[1;31m"
+#define GREEN			"\x1B[32m"
 #define BOLD_GREEN		"\x1B[1;32m"
-#define YELLOW   			"\x1B[33m"
+#define YELLOW			"\x1B[33m"
 #define BOLD_YELLOW		"\x1B[1;33m"
-#define BLUE   				"\x1B[34m"
-#define BOLD_BLUE			"\x1B[1;34m"
-#define MAGENTA   		"\x1B[35m"
+#define BLUE			"\x1B[34m"
+#define BOLD_BLUE		"\x1B[1;34m"
+#define MAGENTA			"\x1B[35m"
 #define BOLD_MAGENTA	"\x1B[1;35m"
-#define CYAN   				"\x1B[36m"
-#define BOLD_CYAN			"\x1B[1;36m"
-#define WIHTE   			"\x1B[37m"
+#define CYAN			"\x1B[36m"
+#define BOLD_CYAN		"\x1B[1;36m"
+#define WIHTE			"\x1B[37m"
 #define BOLD_WIHTE		"\x1B[1;37m"
-#define RESET 			  "\x1B[0m"
-#define BOLD_RESET		"\x1B1;[0m"
+#define RESET			"\x1B[0m"
+#define BOLD_RESET		"\x1B[1;0m"
 
-#define VERSION  			"1.5"
+#define VERSION  			"1.6"
 #define AUTHOR  			"Alfredo Orozco de la Paz"
-#define AUTHOR_EMAIL  "alfredoopa@gmail.com"
-#define LAST_COMPILATION	"26-10-2017"
+#define AUTHOR_EMAIL		"alfredoopa@gmail.com"
+#define LAST_COMPILATION	"26-03-2018"
 
 typedef struct {
 	char blink_template;
@@ -48,35 +48,37 @@ char txt[2048];
 
 void show_version(){
 
-printf( BOLD_MAGENTA "      ___           ___           ___           ___     									\n");
-printf("     /\\  \\         /\\  \\         /\\  \\         /\\  \\    						\n");
-printf("    /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\   						\n");
-printf("   /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\ \\  \\  				\n");
-printf(BOLD_CYAN "  /::\\~\\:\\  \\   /::\\~\\:\\  \\   /:/  \\:\\  \\   _\\:\\~\\ \\  \\ 		\n");
-printf(" /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/ \\:\\__\\ /\\ \\:\\ \\ \\__\\	\n");
-printf(" \\/__\\:\\/:/  / \\/__\\:\\/:/  / \\:\\  \\ /:/  / \\:\\ \\:\\ \\/__/			\n");
-printf("      \\::/  /       \\::/  /   \\:\\  /:/  /   \\:\\ \\:\\__\\  						\n");
-printf(BOLD_YELLOW"      /:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  /  								\n");
-printf("     /:/  /                     \\::/  /       \\::/  /   \n");
-printf("     \\/__/                       \\/__/         \\/__/    \n\n");
+	printf( BOLD_MAGENTA "      ___           ___           ___           ___     									\n");
+	printf("     /\\  \\         /\\  \\         /\\  \\         /\\  \\    						\n");
+	printf("    /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\   						\n");
+	printf("   /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\ \\  \\  				\n");
+	printf(BOLD_CYAN "  /::\\~\\:\\  \\   /::\\~\\:\\  \\   /:/  \\:\\  \\   _\\:\\~\\ \\  \\ 		\n");
+	printf(" /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/ \\:\\__\\ /\\ \\:\\ \\ \\__\\	\n");
+	printf(" \\/__\\:\\/:/  / \\/__\\:\\/:/  / \\:\\  \\ /:/  / \\:\\ \\:\\ \\/__/			\n");
+	printf("      \\::/  /       \\::/  /   \\:\\  /:/  /   \\:\\ \\:\\__\\  						\n");
+	printf(BOLD_YELLOW"      /:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  /  								\n");
+	printf("     /:/  /                     \\::/  /       \\::/  /   \n");
+	printf("     \\/__/                       \\/__/         \\/__/    \n\n");
 
 
-	printf(RESET GREEN "APOS" RESET " (AVR Project Open Source) v%s\n\n", VERSION);
-	printf("Creates an AVR project template based on a makefile using the avr-gcc toolchain and avrdude.\n\n");
-	printf(RESET "   Usage:" RED " apos " RESET "[" YELLOW "OPTIONS" RESET "] <" CYAN "Project_Name" RESET ">\n\n");
-	printf("   -? or ? option Shows help\n\n");
+	printf(RESET GREEN " APOS" RESET " (AVR Project Open Source)"BOLD_CYAN" v%s\n" BOLD_RESET" Last compilation: " BOLD_CYAN "%s\n\n", VERSION, LAST_COMPILATION);
+	printf(" Creates an AVR project template based on a makefile using the avr-gcc toolchain and avrdude.\n\n");
 }
+
 void show_help() {
 	show_version();
+	printf(BOLD_RESET "   Usage:" BOLD_RED " apos " RESET "[" BOLD_YELLOW "OPTIONS" RESET "] <" BOLD_CYAN "Project_Name" RESET ">\n\n");
+	printf(BOLD_YELLOW"   -?"RESET" or"BOLD_YELLOW" ? "RESET"option Shows help\n\n");
+
 	printf(BOLD_YELLOW "--------------------------------------------\n\n" RESET);
 	printf(BOLD_YELLOW "   OPTIONS:\n\n" RESET);
 	printf(YELLOW "     -b" RESET "    Create a blink project template\n");
-	printf(YELLOW "     -d" RESET "    Define the Microcontroller (e.g atmega328p)\n");
+	printf(YELLOW "     -m" RESET "    Define the Microcontroller (e.g atmega328p)\n");
 	printf(YELLOW "     -e" RESET "    Define the Extended Fuse  (2 digit hex format)\n");
 	printf(YELLOW "     -f" RESET "    Define the CPU Frequency (in Hz)\n");
 	printf(YELLOW "     -g" RESET "    Initialize a GIT repository in the project folder\n");
-	printf(YELLOW "     -h" RESET "    Define the Low Fuse  (2 digit hex format)\n");
-	printf(YELLOW "     -l" RESET "    Define the High Fuse (2 digit hex format)\n");
+	printf(YELLOW "     -h" RESET "    Define the High Fuse  (2 digit hex format)\n");
+	printf(YELLOW "     -l" RESET "    Define the Low Fuse (2 digit hex format)\n");
 	printf(YELLOW "     -p" RESET "    Define the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)\n");
 	printf(YELLOW "     -v" RESET "    Show the " RED "apos " RESET "version\n");
 	printf(YELLOW "  -?, ?" RESET "    Show this help\n\n");
@@ -95,13 +97,13 @@ void show_help() {
 	printf(BOLD_MAGENTA "   Examples: create a blink project\n\n" RESET);
 	printf("     Empty project:            " RED "apos " CYAN "blink\n" RESET);
 	printf("     Create a Blink project:   " RED "apos " YELLOW "-b " CYAN "blink\n" RESET);
-	printf("     Define MCU:               " RED "apos " YELLOW "-d " RESET "atmega32 " CYAN "blink\n" RESET);
-	printf("     Define CPU frequency:     " RED "apos " YELLOW "-d " RESET "atmega32 " YELLOW "-f " RESET "16000000 " CYAN "blink\n" RESET);
-	printf("     Define programmer:        " RED "apos " YELLOW "-d " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " CYAN "blink\n" RESET);
-	printf("     Define fuses:             " RED "apos " YELLOW "-d " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " YELLOW "-e "RESET"ff "YELLOW"-l "RESET"de "YELLOW"-h "RESET"D9 "CYAN"blink\n" RESET);
+	printf("     Define MCU:               " RED "apos " YELLOW "-m " RESET "atmega32 " CYAN "blink\n" RESET);
+	printf("     Define CPU frequency:     " RED "apos " YELLOW "-m " RESET "atmega32 " YELLOW "-f " RESET "16000000 " CYAN "blink\n" RESET);
+	printf("     Define programmer:        " RED "apos " YELLOW "-m " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " CYAN "blink\n" RESET);
+	printf("     Define fuses:             " RED "apos " YELLOW "-m " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " YELLOW "-e "RESET"ff "YELLOW"-l "RESET"de "YELLOW"-h "RESET"D9 "CYAN"blink\n" RESET);
 	printf("                \n");
-	printf(RESET" Created by " BOLD_MAGENTA "%s" CYAN " <" YELLOW "%s" CYAN ">\n" RESET, AUTHOR, AUTHOR_EMAIL);
-
+	printf(RESET" Created by " BOLD_CYAN "%s" MAGENTA " <" YELLOW "%s" MAGENTA ">\n\n" RESET, AUTHOR, AUTHOR_EMAIL);
+	
 }
 
 int parse_args(int argc, char const *argv[], options_t *options_out){
@@ -131,25 +133,40 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 				return 0;
 			}
 			switch(option[1]){
-				case 'd': 
+				case 'm': 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->device, argv[i+1]);
 					else
 						strcpy(options_out->device, "missing");
 				break;
 				case 'l': 
+					if(!option[2] || option[2] != 'f')
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
+						return 0;
+					}
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->low_f, argv[i+1]);
 					else
 						strcpy(options_out->low_f, "missing");
 				break;
-				case 'h': 
+				case 'h':
+					if(!option[2] || option[2] != 'f')
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
+						return 0;
+					} 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->high_f, argv[i+1]);
 					else
 						strcpy(options_out->high_f, "missing");
 				break;
-				case 'e': 
+				case 'e':
+					if(!option[2] || option[2] != 'f')
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
+						return 0;
+					} 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->extended_f, argv[i+1]);
 					else
@@ -175,7 +192,6 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 				return 0;
 				
 			}
-
 		}
 	}
 
@@ -237,7 +253,7 @@ void create_mainfile(options_t *options)
 
 void create_gitrepo(options_t *options)
 {
-	sprintf(txt, "cd %s && git init && git add * && git commit -m \"Initial commit for the AVR project ~%s~\"",options->project_name, options->project_name);
+	sprintf(txt, "cd %s && git init && git add * && git commit -m \"Initial commit for APOS AVR project ~%s~\"",options->project_name, options->project_name);
 	system(txt);
 }
 
@@ -248,7 +264,7 @@ void create_readme(options_t *options)
 		strcpy(txt, options->project_name);
 		strcat(txt, "/README.md");
 		f = fopen(txt, "w");
-		fprintf(f, "\n# %s \n\n### Project created with APOS (AVR Project Open Source)\n\nTo edit the projecto settings, open the Makefile and edit the firs lines of the file.", options->project_name);
+		fprintf(f, "\n# %s \n\n### Project created with APOS (AVR Project Open Source)\n\nTo edit the projecto settings, open the Makefile and edit the firs lines of the file.\n\n", options->project_name);
 		fclose(f);
 }
 
@@ -264,7 +280,7 @@ void create_folder_project(options_t *options)
 
 	if(f=fopen(options->project_name, "r"))
 	{
-		printf("apos: [error] The project \"%s\" already exist!\n", options->project_name);
+		printf(BOLD_RED"   apos: [error] The project \"%s\" already exist!\n\n", options->project_name);
 		fclose(f);
 		exit(1);
 	}
@@ -319,21 +335,21 @@ int main(int argc, char const *argv[])
 		return 0;
 	}
 
-	printf("Project Information:\n\n");
-	printf("  *Project Name:    %s\n", options.project_name);
-	printf("  *Git Repository:  %s\n", options.create_git ? "True":"False");
-	printf("  *Blink Template:  %s\n", options.blink_template ? "True":"False");
-	printf("  *Microcontroller: %s\n", options.device);
-	printf("  *CPU Frequency:   %s\n", options.f_cpu);
-	printf("  *Low Fuse:        %s\n", options.low_f);
-	printf("  *High Fuse:       %s\n", options.high_f);
-	printf("  *Extended Fuse:   %s\n", options.extended_f);
-	printf("  *Programmer:      %s\n\n", options.programmer);
+	printf(BOLD_MAGENTA"\n  Project Information:\n\n");
+	printf(BOLD_CYAN"   Project Name:    "BOLD_YELLOW"%s\n", options.project_name);
+	printf(BOLD_CYAN"   Git Repository:  "BOLD_YELLOW"%s\n", options.create_git ? "True":"False");
+	printf(BOLD_CYAN"   Blink Template:  "BOLD_YELLOW"%s\n", options.blink_template ? "True":"False");
+	printf(BOLD_CYAN"   Microcontroller: "BOLD_YELLOW"%s\n", options.device);
+	printf(BOLD_CYAN"   CPU Frequency:   "BOLD_YELLOW"%s\n", options.f_cpu);
+	printf(BOLD_CYAN"   Low Fuse:        "BOLD_YELLOW"%s\n", options.low_f);
+	printf(BOLD_CYAN"   High Fuse:       "BOLD_YELLOW"%s\n", options.high_f);
+	printf(BOLD_CYAN"   Extended Fuse:   "BOLD_YELLOW"%s\n", options.extended_f);
+	printf(BOLD_CYAN"   Programmer:      "BOLD_YELLOW"%s\n\n", options.programmer);
 
 
 	create_project(&options);
 
-	printf("\napos: Project \"%s\" created!\n\n", options.project_name);
+	printf(BOLD_GREEN"\n    apos: Project \"%s\" created!\n\n", options.project_name);
 
 	return 0;
 }

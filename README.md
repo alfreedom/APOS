@@ -68,8 +68,6 @@ $ sudo yum install  avr-gcc avr-binutils avr-libc avrdude
 $ sudo pacman -Sy  avr-gcc avr-binutils avr-libc avrdude
 ```
 
-<br>
-
 ## Add udev rules
 
 To use the software programmers with avrdude without root permissions, 

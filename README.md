@@ -14,10 +14,10 @@ It offers a free alternative with improvements and extra options, which works wi
 - [Add udev rules](#add-udev-rules)
 - [Usage](#usage)
 	- [Project creation](#project-creation)
+	- [APOS options](#apos-options)
 	- [Project configuration](#project-configuration)
 	- [Project compilation](#project-compilation)
 	- [Add new sources to project ](#add-new-sources-to-project)
-
 
 - [Makefile targets](#makefile-targets)
 	- [Flash the firmware](#flash-the-firmware)
@@ -110,6 +110,19 @@ sudo udevadm trigger --action=add
 This help show you how to create a project, configure it, and also how to add your own code. To create a new project run the command "apos" followed by the name of the project. 
 
 This will create a folder containing the main.c file, the folders 'src', 'include' and the Makefile.
+
+#### APOS options
+
+	-b      Creates a blink project template
+	-m      Defines the Microcontroller (e.g atmega328p)
+	-ef     Defines the Extended Fuse  (2 digit hex format)
+	-f      Defines the CPU Frequency (in Hz)
+	-g      Initialize a GIT repository in the project folder
+	-hf     Defines the High Fuse  (2 digit hex format)
+	-lf     Defines the Low Fuse (2 digit hex format)
+	-p      Defines the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)
+	-v      Shows the apos version
+	-?, ?   Shows help
 
 #### Project creation
 To create a empty project, type in a terminal the command:

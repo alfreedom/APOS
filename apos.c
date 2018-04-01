@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "templates.h"
 
@@ -25,10 +26,10 @@
 #define RESET			"\x1B[0m"
 #define BOLD_RESET		"\x1B[1;0m"
 
-#define VERSION  			"1.6"
+#define VERSION  			"1.6.3"
 #define AUTHOR  			"Alfredo Orozco de la Paz"
 #define AUTHOR_EMAIL		"alfredoopa@gmail.com"
-#define LAST_COMPILATION	"26-03-2018"
+#define LAST_COMPILATION	"April 1 2018"
 
 typedef struct {
 	char blink_template;
@@ -62,7 +63,7 @@ void show_version(){
 
 
 	printf(RESET GREEN " APOS" RESET " (AVR Project Open Source)"BOLD_CYAN" v%s\n" BOLD_RESET" Last compilation: " BOLD_CYAN "%s\n\n", VERSION, LAST_COMPILATION);
-	printf(" Creates an AVR project template based on a makefile using the avr-gcc toolchain and avrdude.\n\n");
+	printf(" Creates an AVR project template based on a makefile.\n Uses the avr-gcc toolchain and avrdude.\n\n");
 }
 
 void show_help() {
@@ -73,15 +74,15 @@ void show_help() {
 	printf(BOLD_YELLOW "--------------------------------------------\n\n" RESET);
 	printf(BOLD_YELLOW "   OPTIONS:\n\n" RESET);
 	printf(YELLOW "     -b" RESET "    Create a blink project template\n");
-	printf(YELLOW "     -m" RESET "    Define the Microcontroller (e.g atmega328p)\n");
-	printf(YELLOW "     -e" RESET "    Define the Extended Fuse  (2 digit hex format)\n");
+	printf(YELLOW "     -ef" RESET "   Define the Extended Fuse  (2 digit hex format)\n");
 	printf(YELLOW "     -f" RESET "    Define the CPU Frequency (in Hz)\n");
 	printf(YELLOW "     -g" RESET "    Initialize a GIT repository in the project folder\n");
-	printf(YELLOW "     -h" RESET "    Define the High Fuse  (2 digit hex format)\n");
-	printf(YELLOW "     -l" RESET "    Define the Low Fuse (2 digit hex format)\n");
+	printf(YELLOW "     -hf" RESET "   Define the High Fuse  (2 digit hex format)\n");
+	printf(YELLOW "     -lf" RESET "   Define the Low Fuse (2 digit hex format)\n");
+	printf(YELLOW "     -m" RESET "    Define the Microcontroller (e.g atmega328p)\n");
 	printf(YELLOW "     -p" RESET "    Define the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)\n");
 	printf(YELLOW "     -v" RESET "    Show the " RED "apos " RESET "version\n");
-	printf(YELLOW "  -?, ?" RESET "    Show this help\n\n");
+	printf(YELLOW "     -?,? " RESET " Show this help\n\n");
 	
 	printf(BOLD_CYAN "--------------------------------------------\n\n" RESET);
 	printf(BOLD_CYAN "   Makefile Options:\n\n" RESET);
@@ -108,6 +109,8 @@ void show_help() {
 
 int parse_args(int argc, char const *argv[], options_t *options_out){
 
+	int ix;
+
 	memset(options_out, 0, sizeof(options_t));
 	// Set the default options
 	strcpy(options_out->device, "atmega328p");
@@ -119,6 +122,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 
 	for(int i = 1; i< argc; i++)
 	{
+		ix=0;
 		char const *option = argv[i];
 		if (*option == '?')
 		{
@@ -146,7 +150,24 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 						return 0;
 					}
 					if(i+1 < argc && argv[i+1][0] != '-') 
+					{
 						strcpy(options_out->low_f, argv[i+1]);
+						while(options_out->low_f[ix])
+						{
+							options_out->low_f[ix] = toupper(options_out->low_f[ix]);							
+							if(!isxdigit(options_out->low_f[ix]))
+							{
+								printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid hex value " CYAN "\"%c\"" RESET " for low fuses\n\n", options_out->low_f[ix]);
+								return 0;
+							}
+							ix++;
+						}
+						if(strlen(options_out->low_f) >2)
+						{
+							printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid hex value " CYAN "\"%s\"" RESET " for low fuses, needs 2 digits\n\n" RESET, options_out->low_f);
+							return 0;
+						}
+					}
 					else
 						strcpy(options_out->low_f, "missing");
 				break;
@@ -157,7 +178,24 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 						return 0;
 					} 
 					if(i+1 < argc && argv[i+1][0] != '-') 
+					{
 						strcpy(options_out->high_f, argv[i+1]);
+						while(options_out->high_f[ix])
+						{
+							options_out->high_f[ix] = toupper(options_out->high_f[ix]);
+							if(!isxdigit(options_out->high_f[ix]))
+							{
+								printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid hex value " CYAN "\"%c\"" RESET " for high fuses\n\n", options_out->high_f[ix]);
+								return 0;
+							}
+							ix++;
+						}
+						if(strlen(options_out->high_f) >2)
+						{
+							printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid hex value " CYAN "\"%s\"" RESET " for high fuses, needs 2 digits\n\n" RESET, options_out->high_f);
+							return 0;
+						}
+					}
 					else
 						strcpy(options_out->high_f, "missing");
 				break;
@@ -168,7 +206,24 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 						return 0;
 					} 
 					if(i+1 < argc && argv[i+1][0] != '-') 
+					{
 						strcpy(options_out->extended_f, argv[i+1]);
+						while(options_out->extended_f[ix])
+						{
+							options_out->extended_f[ix] = toupper(options_out->extended_f[ix]);							
+							if(!isxdigit(options_out->extended_f[ix]))
+							{
+								printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid hex value " CYAN "\"%c\"" RESET " for extended fuses\n\n", options_out->extended_f[ix]);
+								return 0;
+							}
+							ix++;
+						}
+						if(strlen(options_out->extended_f) >2)
+						{
+							printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid hex value " CYAN "\"%s\"" RESET " for extended fuses, needs 2 digits\n\n" RESET, options_out->extended_f);
+							return 0;
+						}
+					}
 					else
 						strcpy(options_out->extended_f, "missing");
 				break;
@@ -280,7 +335,8 @@ void create_folder_project(options_t *options)
 
 	if(f=fopen(options->project_name, "r"))
 	{
-		printf(BOLD_RED"   apos: [error] The project \"%s\" already exist!\n\n", options->project_name);
+		printf(BOLD_RED "\napos" RESET ": [" YELLOW "error" RESET "] the project " BOLD_YELLOW "\"%s\"" RESET " already exist!\n\n", options->project_name);
+		
 		fclose(f);
 		exit(1);
 	}
@@ -335,8 +391,11 @@ int main(int argc, char const *argv[])
 		return 0;
 	}
 
+	create_project(&options);
+	
+	printf(BOLD_GREEN  "\n  apos: Project \"%s\" created!\n", options.project_name);
 	printf(BOLD_MAGENTA"\n  Project Information:\n\n");
-	printf(BOLD_CYAN"   Project Name:    "BOLD_YELLOW"%s\n", options.project_name);
+	printf(BOLD_CYAN"   Project Name:    "BOLD_YELLOW"\"%s\"\n", options.project_name);
 	printf(BOLD_CYAN"   Git Repository:  "BOLD_YELLOW"%s\n", options.create_git ? "True":"False");
 	printf(BOLD_CYAN"   Blink Template:  "BOLD_YELLOW"%s\n", options.blink_template ? "True":"False");
 	printf(BOLD_CYAN"   Microcontroller: "BOLD_YELLOW"%s\n", options.device);
@@ -347,9 +406,7 @@ int main(int argc, char const *argv[])
 	printf(BOLD_CYAN"   Programmer:      "BOLD_YELLOW"%s\n\n", options.programmer);
 
 
-	create_project(&options);
 
-	printf(BOLD_GREEN"\n    apos: Project \"%s\" created!\n\n", options.project_name);
 
 	return 0;
 }

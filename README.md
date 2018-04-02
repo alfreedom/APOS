@@ -2,7 +2,7 @@
 
 Creates an AVR project template for Linux systems based on a Makefile.
 
-This project is inspired by the avr-proj program that includes the CrossPack for AVR software package for MacOS.
+This project is inspired by the avr-proj program Thatcher is incluye in the CrossPack AVR software package for MacOS.
 
 It offers a free alternative with improvements and extra options, which works with Linux operating systems in a simple but very useful program.
 
@@ -30,8 +30,8 @@ It offers a free alternative with improvements and extra options, which works wi
 
 ## Installation
 
-To install, dowload or clone this repository in your computer, the enter in a terminal to the folder "apos" and run the command "make" followed by the command "make install" as root: "sudo make install". 
-It will install the program on the system:
+To install, dowload or clone this repository in your computer, then enter to the folder "apos" from the terminal and run the command "make" followed by the command "make install" as root: "sudo make install". 
+It will install the program on your system:
 
 
 ```bash
@@ -40,7 +40,7 @@ $ cd apos
 $ make
 $ sudo make install
 ```
-The default installation path is /opt/apos/. To verify the installation, run the command apos -? 
+The default installation path is /opt/apos/. To check the installation run the command apos -? 
 
 ```bash
 $ apos -?
@@ -54,7 +54,7 @@ $ apos -v
 
 ## Toolchain Installation
 
-You need to have installed the avr-gcc toolchain and the avrdude program to compile the avr code. To install it run someone of the commands below depending of your operating system.
+You need to have installed the avr-gcc toolchain and the avrdude program to compile your AVR source code. To install it run someone of the commands below depending of your operating system.
 ##### Debian and derivates
 ```bash
 $ sudo apt-get install  gcc-avr binutils-avr avr-libc avrdude
@@ -70,9 +70,9 @@ $ sudo pacman -Sy  avr-gcc avr-binutils avr-libc avrdude
 
 ## Add udev rules
 
-To use the software programmers with avrdude without root permissions, 
+To use the hardware programmers with avrdude without root permissions, 
 it is necessary to add the rules of programmers to the system. Depending 
-on the version of linux, you must change the name of the group to which the 
+of your Linux distribution, you must change the name of the group to which the 
 device rules belong. For Debian and derivatives the __*"dialout"*__ group is used, 
 for Fedora it is __*"users"*__ and for Arch it is __*"uucp"*__.
 
@@ -100,7 +100,7 @@ ATTR{idVendor}=="03eb", ATTR{idProduct}=="2ffb", GROUP="uucp", MODE="0660" # AT9
 ATTR{idVendor}=="1781", ATTR{idProduct}=="0c9f", GROUP="uucp", MODE="0660" # usbtiny
 ```
 
-To reload the device rules, execute the below commands:
+To reload the device rules, execute the commands below:
 ```bash
 sudo udevadm control --reload 
 sudo udevadm trigger --action=add
@@ -162,7 +162,7 @@ $ make
 If all is ok, the compilation information will be shown in the terminal with usage data from the flash memory, ram and eeprom.
 <br>
 #### Add new sources to project 
-Adding you own hardware drivers and libraries is very simple, only put your header file in the 'include' folder or another subfolder, and the source files in the 'src' folder os subfolder.
+Adding you own hardware drivers and libraries is very simple, only put your header file in the 'include' folder or another subfolder, and the source files in the 'src' folder or subfolder.
 
 The final step is uncomment and copy the lines 14 and 17 of the 'Makefile' to add your source files and include paths.
 

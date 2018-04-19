@@ -1,5 +1,5 @@
-all: apos.c
-	gcc apos.c -o apos
+all: main.c
+	gcc main.c -o apos
 
 clean:
 	rm -f apos

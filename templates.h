@@ -1,3 +1,21 @@
+/******************************************************************************
+ *                                                                            *
+ *    Copyright © 2017-2018 Alfredo Orozco <alfredoopa@gmail.com>                  *
+ *                                                                            *
+ *   This program is free software: you can redistribute it and/or modify     *
+ *   it under the terms of the GNU General Public License as published by     *
+ *   the Free Software Foundation, either version 3 of the License, or        *
+ *   (at your option) any later version.                                      *
+ *                                                                            *
+ *   This program is distributed in the hope that it will be useful,          *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
+ *   GNU General Public License for more details.                             *
+ *                                                                            *
+ *   You should have received a copy of the GNU General Public License        *
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>     *
+ *                                                                            *
+ *****************************************************************************/
 
 const char empty_template_body[] = "\n *       Author:  YOUR_NAME\
 \n *      License:  YOUR_LICENSE\
@@ -66,13 +84,13 @@ const char blink_program[] = "\n *       Author:  YOUR_NAME\
 \n";
 
 
-const char makefile_header[] = "# Name: Makefile\
-\n# Author:    <insert your name here>\
-\n# Copyright: <insert your copyright message here>\
-\n# License:   <insert your license reference here>\
-\n";
+const char makefile_header[] = "#############################################\
+\n# 				APOS Makefile				#\
+\n#											#\
+\n#############################################\n";
 
-const char makefile_body[] = "\nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE) -B 2\
+const char makefile_body[] = "\
+\nAVRDUDE_OPS  = -B 0.5 -D\
 \n\
 \nOBJECT_FILES = main.o\
 \n#OBJECT_FILES += ./src/mySource.o\
@@ -116,6 +134,14 @@ const char makefile_body[] = "\nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE
 \nreset:\
 \n	$(AVRDUDE)\
 \n\
+\neeprom:	$(PROJECT_NAME).eep\
+\n	$(AVRDUDE) -U eeprom:w:$(PROJECT_NAME).eep:i\
+\n\
+\nread_eeprom:\
+\n	$(AVRDUDE) -U eeprom:r:$(PROJECT_NAME).eeprom.bin:r\
+\n\
+\nread_flash:\
+\n	$(AVRDUDE) -U flash:r:$(PROJECT_NAME).flash.bin:r\
 \ninstall: flash fuse\
 \n\
 \nclean:\
@@ -127,6 +153,7 @@ const char makefile_body[] = "\nAVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE
 \n$(PROJECT_NAME).hex: $(PROJECT_NAME).elf\
 \n	rm -f $(PROJECT_NAME).hex\
 \n	avr-objcopy -j .text -j .data -O ihex $(PROJECT_NAME).elf $(PROJECT_NAME).hex\
+\n	avr-objcopy -j .eeprom --set-section-flags=.eeprom=\"alloc,load\" --change-section-lma .eeprom=0 -O ihex $(PROJECT_NAME).elf $(PROJECT_NAME).eep\
 \n	avr-size --format=avr --mcu=$(DEVICE) $(PROJECT_NAME).elf\
 \n\
 \ndisasm:	$(PROJECT_NAME).elf\

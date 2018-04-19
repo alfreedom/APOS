@@ -18,13 +18,19 @@ It offers a free alternative with improvements and extra options, which works wi
 	- [Project configuration](#project-configuration)
 	- [Project compilation](#project-compilation)
 	- [Add new sources to project ](#add-new-sources-to-project)
-
 - [Makefile targets](#makefile-targets)
+	- [Compile the code](#compile-the-code)
+	- [Clean the compiled project](#clean-the-compiled-project)
 	- [Flash the firmware](#flash-the-firmware)
 	- [Erase chip](#erase-chip)
 	- [Program reset](#program-reset)
 	- [Write fuses](#write-fuses)
 	- [Firmware install](#firmware-install)
+	- [EEPROM file write](#eeprom-file-write)
+	- [Read flash memory](#read-flash-memory)
+	- [Read eeprom memory](#read-eeprom-memory)
+	- [Disassemble the compiled code](#disassemble-the-compiled-code)
+
 
 *****
 
@@ -113,16 +119,16 @@ This will create a folder containing the main.c file, the folders 'src', 'includ
 
 #### APOS options
 
-	-b      Creates a blink project template
-	-m      Defines the Microcontroller (e.g atmega328p)
-	-ef     Defines the Extended Fuse  (2 digit hex format)
-	-f      Defines the CPU Frequency (in Hz)
-	-g      Initialize a GIT repository in the project folder
-	-hf     Defines the High Fuse  (2 digit hex format)
-	-lf     Defines the Low Fuse (2 digit hex format)
-	-p      Defines the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)
-	-v      Shows the apos version
-	-?, ?   Shows help
+	-b          Creates a blink project template
+	-m          Defines the Microcontroller (e.g atmega328p)
+	-ef         Defines the Extended Fuse  (2 digit hex format)
+	-f          Defines the CPU Frequency (in Hz)
+	-g          Initialize a GIT repository in the project folder
+	-hf         Defines the High Fuse  (2 digit hex format)
+	-lf         Defines the Low Fuse (2 digit hex format)
+	-p          Defines the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)
+	-v          Shows the apos version
+	-h, -?, ?   Shows help
 
 #### Project creation
 To create a empty project, type in a terminal the command:
@@ -140,17 +146,18 @@ $ apos -d atmega328p -f 16000000 -p usbtiny my_proyect
 If you want to create a git repository, add the "-g" option before the project name. In the same way add the "-b" option if you want to create the project with a blink program template.
 <br>
 #### Project Configuration
-Do you need to change the microcontroller frequency, model, programmer, fuses or another configuration? you only need to edit the lines from 6 to 11 of the project Makefile.
+Do you need to change the microcontroller frequency, model, programmer, fuses or another configuration? you only need to edit the lines from 6 to 12 of the project Makefile.
 
 ```Makefile
  5
  6 PROJECT_NAME = my_project
- 7 DEVICE       = atmega328p
+ 7 DEVICE       = atmega32
  8 CLOCK        = 16000000
- 9 PROGRAMMER   = -c usbasp -P usb
-10 FUSES        = -U hfuse:w:0xD9:m -U lfuse:w:0xDE:m #-U efuse:w:0xFF:m
-11 AVRDUDE      = avrdude $(PROGRAMMER) -p $(DEVICE)
-12
+ 9 FUSES        = -U hfuse:w:0xD1:m -U lfuse:w:0xDE:m #-U efuse:w:0xFF:m
+10 AVRDUDE      = avrdude
+11 AVRDUDE_PROG = -c usbtiny -P usb
+12 AVRDUDE_OPS  = -B 0.5 -D
+13
 
 ```
 #### Project Compilation 
@@ -164,16 +171,17 @@ If all is ok, the compilation information will be shown in the terminal with usa
 #### Add new sources to project 
 Adding you own hardware drivers and libraries is very simple, only put your header file in the 'include' folder or another subfolder, and the source files in the 'src' folder or subfolder.
 
-The final step is uncomment and copy the lines 14 and 17 of the 'Makefile' to add your source files and include paths.
+The final step is uncomment and copy the lines 15 and 19 of the 'Makefile' to add your source files and include paths.
 
 ```Makefile
-12
-13 OBJECT_FILES = main.o
-14 #OBJECT_FILES += ./src/mySource.o
-15
-16 INCLUDEPATHS =  -I ./include
-17 #INCLUDEPATHS += -I ./include/myFolder
-18
+13
+14 OBJECT_FILES = main.o
+15 #OBJECT_FILES += ./src/mySource.o
+16
+17 INCLUDEPATHS =  -I .
+18 INCLUDEPATHS =  -I ./include
+19 #INCLUDEPATHS += -I ./include/myFolder
+20
 ```
 
 Save changes and type "make" to compile your new code.
@@ -189,6 +197,11 @@ $ make
 or
 ```bash
 $ make all
+```
+#### Clean the compiled project
+To clean (erase all compiled outputs) the project type the command:
+```bash
+$ make clean
 ```
 #### Flash the firmware 
 To program the flash memory of the AVR with the .hex file and the programmer configurated, type the command:
@@ -211,9 +224,45 @@ To program the AVR fuses configurated in the makefile type the command:
 $ make fuses
 ```
 #### Firmware install
-To program the AVR fuses and the .hex program type the command:
+To program the AVR fuses, the .hex program and the .eep eeprom file type the command:
 ```bash
 $ make install
 ```
+#### EEPROM file write
+To program the AVR EEPROM memory whit the generate .eep file type the command:
+```bash
+$ make eeprom
+```
+#### Read flash memory
+To read the contents of the flash memory type the command:
+```bash
+$ make read_flash
+```
+It will be generate a *.flash.bin file.
+#### Read eeprom memory
+To read the contents of the eeprom memory type the command:
+```bash
+$ make read_eeprom
+```
+It will be generate a *.eeprom.bin file.
+#### Disassemble the compiled code
+To disassemble the compiled .elf code type the command:
+```bash
+$ make disasm
+```
 ***
-Autor: Alfredo Orozco de la Paz
+
+Copyright © 2017-2018 Alfredo Orozco <alfredoopa@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>

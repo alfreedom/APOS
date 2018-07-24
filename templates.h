@@ -91,6 +91,7 @@ const char makefile_header[] = "#############################################\
 
 const char makefile_body[] = "\
 \nAVRDUDE_OPS  = -B 0.5 -D\
+\nAVRDUDE  = avrdude -p $(DEVICE) $(AVRDUDE_PROG) $(AVRDUDE_OPS)\
 \n\
 \nOBJECT_FILES = main.o\
 \n#OBJECT_FILES += ./src/mySource.o\

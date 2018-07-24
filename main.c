@@ -97,7 +97,7 @@ void create_makefile(options_t *options)
 	f = fopen(txt, "w");
 	
 	fwrite(makefile_header,sizeof(char), strlen(makefile_header), f);
-	fprintf(f, "\nPROJECT_NAME = %s\nDEVICE       = %s\nCLOCK        = %s\nFUSES        = -U hfuse:w:0x%s:m -U lfuse:w:0x%s:m #-U efuse:w:0x%s:m\nAVRDUDE      = avrdude\nAVRDUDE_PROG = -c %s -P usb",
+	fprintf(f, "\nPROJECT_NAME = %s\nDEVICE       = %s\nCLOCK        = %s\nFUSES        = -U hfuse:w:0x%s:m -U lfuse:w:0x%s:m #-U efuse:w:0x%s:m\nAVRDUDE_PROG = -c %s -P usb",
 	options->project_name, options->device, options->f_cpu, options->high_f, options->low_f, options->extended_f, options->programmer);
 	fwrite(makefile_body,sizeof(char), strlen(makefile_body), f);
 	

@@ -119,10 +119,12 @@ This will create a folder containing the main.c file, the folders 'src', 'includ
 
 #### APOS options
 
+	-ap         Define the ABOS Loader serial port (default: /dev/ttyUSB0)
+	-ab         Define the ABOS Loader baudrate (default: 38400)
 	-b          Creates a blink project template
-	-m          Defines the Microcontroller (e.g atmega328p)
+	-m          Define the Microcontroller (default: atmega128)
 	-ef         Defines the Extended Fuse  (2 digit hex format)
-	-f          Defines the CPU Frequency (in Hz)
+	-f          Define the CPU Frequency in Hz (default 16000000)
 	-g          Initialize a GIT repository in the project folder
 	-hf         Defines the High Fuse  (2 digit hex format)
 	-lf         Defines the Low Fuse (2 digit hex format)
@@ -204,9 +206,13 @@ To clean (erase all compiled outputs) the project type the command:
 $ make clean
 ```
 #### Flash the firmware 
-To program the flash memory of the AVR with the .hex file and the programmer configurated, type the command:
+To program the flash memory of the AVR with the .hex file and the avrdude programmer configurated, type the command:
 ```bash
 $ make flash
+```
+To program the AVR usign ABOS Bootloader, type the command:
+```bash
+$ make abos
 ```
 #### Erase chip 
 To erase the memories of the AVR type the command:

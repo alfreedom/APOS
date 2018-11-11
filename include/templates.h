@@ -29,7 +29,6 @@ const char empty_template_body[] = "\n *       Author:  YOUR_NAME\
 \n\
 \nvoid AVRInit()\
 \n{\
-\n\
 \n	// YOUR CODE INITIALIZATION\
 \n\
 \n}\
@@ -84,14 +83,14 @@ const char blink_program[] = "\n *       Author:  YOUR_NAME\
 \n";
 
 
-const char makefile_header[] = "#############################################\
+const char makefile_apos_header[] = "#############################################\
 \n# 				APOS Makefile				#\
 \n#											#\
 \n#############################################\n";
 
-const char makefile_body[] = "\
-\nAVRDUDE_OPS  = -B 0.5 -D\
-\nAVRDUDE  = avrdude -p $(DEVICE) $(AVRDUDE_PROG) $(AVRDUDE_OPS)\
+const char makefile_apos_body[] = "\
+\nAVRDUDE_OPS   = -B 0.5\
+\nAVRDUDE       = avrdude -p $(DEVICE) $(AVRDUDE_PROG) $(AVRDUDE_OPS)\
 \n\
 \nOBJECT_FILES = main.o\
 \n#OBJECT_FILES += ./src/mySource.o\
@@ -122,6 +121,9 @@ const char makefile_body[] = "\
 \n\
 \n.cpp.s:\
 \n	$(COMPILE) -S $< -o $@\
+\n\
+\nabos:	$(PROJECT_NAME).hex \
+\n	abosl --port=$(ABOS_PORT) --baudrate=$(ABOS_BAUDRATE) $(PROJECT_NAME).hex\
 \n\
 \nflash:	all\
 \n	$(AVRDUDE) -U flash:w:$(PROJECT_NAME).hex:i\
@@ -163,4 +165,5 @@ const char makefile_body[] = "\
 \ncpp:\
 \n	$(COMPILE) -E main.c\
 \n" ;
+
 

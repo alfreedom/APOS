@@ -30,6 +30,8 @@ typedef struct {
 	char device[50];
 	char programmer[50];
 	char project_name[1024];
+	char abos_port[512];
+	char abos_baudrate[512];
 }options_t;
 
 /**
@@ -44,12 +46,15 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 
 	memset(options_out, 0, sizeof(options_t));
 	// Set the default options
-	strcpy(options_out->device, "atmega32");
+	strcpy(options_out->device, "atmega128a");
 	strcpy(options_out->f_cpu, "16000000");
 	strcpy(options_out->programmer, "usbtiny");
-	strcpy(options_out->high_f, "D1");
-	strcpy(options_out->low_f, "DE");
+	strcpy(options_out->high_f, "D9");
+	strcpy(options_out->low_f, "FF");
 	strcpy(options_out->extended_f, "FF");
+	strcpy(options_out->abos_port, "/dev/ttyUSB0");
+	strcpy(options_out->abos_baudrate, "38400");
+
 
 	for(int i = 1; i< argc; i++)
 	{
@@ -60,6 +65,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 			options_out->help = 1;
 			return 1;
 		}
+
 		if(option[0] == '-')
 		{
 			if(!option[1])
@@ -68,12 +74,48 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 				return 0;
 			}
 			switch(option[1]){
+				// Microcontroller Option
 				case 'm': 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->device, argv[i+1]);
 					else
-						strcpy(options_out->device, "missing");
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] Microcontroller not specified in -m option\n\n" RESET);
+						return 0;
+					}
 				break;
+				// ABOS Options
+				case 'a': 
+					if(!option[2] || (option[2] != 'p' && option[2] != 'b'))
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
+						return 0;
+					}
+
+					if(option[2] == 'p')
+					{
+						if(i+1 < argc && argv[i+1][0] != '-') 
+							strcpy(options_out->abos_port, argv[i+1]);
+						else
+						{
+							printf(RED "apos" RESET ": [" YELLOW "error" RESET "] ABOS Serial Port not specified in -ap option\n\n" RESET);
+							return 0;
+						}
+					}
+					else
+					if(option[2] == 'b')
+					{
+						if(i+1 < argc && argv[i+1][0] != '-') 
+							strcpy(options_out->abos_baudrate, argv[i+1]);
+						else
+						{
+							printf(RED "apos" RESET ": [" YELLOW "error" RESET "] ABOS Serial Port not specified in -ap option\n\n" RESET);
+							return 0;
+						}
+					}
+
+				break;
+				// Low Fuse Option
 				case 'l': 
 					if(!option[2] || option[2] != 'f')
 					{
@@ -100,8 +142,12 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 						}
 					}
 					else
-						strcpy(options_out->low_f, "missing");
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] Low Fuse not specified in -lf option\n\n" RESET);
+						return 0;
+					}
 				break;
+				// High Fuse Option
 				case 'h':
 					if(!option[2])
 					{
@@ -133,8 +179,12 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 						}
 					}
 					else
-						strcpy(options_out->high_f, "missing");
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] High Fuse not specified in -hf option\n\n" RESET);
+						return 0;
+					}
 				break;
+				// Extended Fuse Option
 				case 'e':
 					if(!option[2] || option[2] != 'f')
 					{
@@ -161,32 +211,48 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 						}
 					}
 					else
-						strcpy(options_out->extended_f, "missing");
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] Extended Fuse not specified in -ef option\n\n" RESET);
+						return 0;
+					}
 				break;
+				// CPU Frequency Option
 				case 'f': 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->f_cpu, argv[i+1]);
 					else
-						strcpy(options_out->f_cpu, "missing");
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] CPU Frequency not specified in -f option\n\n" RESET);
+						return 0;
+					}
 				break;
 				case 'p': 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->programmer, argv[i+1]);
 					else
-						strcpy(options_out->programmer, "missing");
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] AVRDUDE Programmer not specified in -p option\n\n" RESET);
+						return 0;
+					}
 				break;
+				// Version Option
 				case 'v': options_out->version = 1; break;
+				// Help Option
 				case '?': options_out->help = 1; break;
+				// Blink Option
 				case 'b': options_out->blink_template = 1; break;
+				// Git Repository Option
 				case 'g': options_out->create_git = 1; break;
+				// Invalid Option
 				default: printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
-				return 0;
+								 return 0;
 				
 			}
 		}
 	}
 
-	if(argv[argc-2][0] == '-' && (argv[argc-2][1] == 'v' || argv[argc-2][1] == '?' || argv[argc-2][1] == 'b' || argv[argc-2][1] == 'g' || argv[argc-2][1] == 'h')){
+	if(argv[argc-2][0] == '-' && (argv[argc-2][1] == 'v' || argv[argc-2][1] == '?' || argv[argc-2][1] == 'b' || argv[argc-2][1] == 'g' || argv[argc-2][1] == 'h'))
+	{
 		strcpy(options_out->project_name, argv[argc-1]);
 	}
 	else if(argv[argc-2][0] != '-' && argv[argc-1][0] != '-')

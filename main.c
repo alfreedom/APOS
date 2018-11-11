@@ -26,9 +26,9 @@
 #include <time.h>
 #include <ctype.h>
 
-#include "templates.h"
-#include "info.h"
-#include "args.h"
+#include "include/templates.h"
+#include "include/info.h"
+#include "include/args.h"
 
 char txt[2048];
 
@@ -62,6 +62,7 @@ int main(int argc, char const *argv[])
 		show_help();
 		return 0;
 	}
+
 	if(!parse_result){
 		printf("Write  apos " YELLOW "?" RESET " or " YELLOW "-?" RESET "  to see help.\n");
 		return 0;
@@ -71,15 +72,18 @@ int main(int argc, char const *argv[])
 	
 	printf(BOLD_GREEN  "\n  apos: Project \"%s\" created!\n", options.project_name);
 	printf(BOLD_MAGENTA"\n  Project Information:\n\n");
-	printf(BOLD_CYAN"   Project Name:    "BOLD_YELLOW"\"%s\"\n", options.project_name);
-	printf(BOLD_CYAN"   Git Repository:  "BOLD_YELLOW"%s\n", options.create_git ? "True":"False");
-	printf(BOLD_CYAN"   Blink Template:  "BOLD_YELLOW"%s\n", options.blink_template ? "True":"False");
-	printf(BOLD_CYAN"   Microcontroller: "BOLD_YELLOW"%s\n", options.device);
-	printf(BOLD_CYAN"   CPU Frequency:   "BOLD_YELLOW"%s\n", options.f_cpu);
-	printf(BOLD_CYAN"   Low Fuse:        "BOLD_YELLOW"%s\n", options.low_f);
-	printf(BOLD_CYAN"   High Fuse:       "BOLD_YELLOW"%s\n", options.high_f);
-	printf(BOLD_CYAN"   Extended Fuse:   "BOLD_YELLOW"%s\n", options.extended_f);
-	printf(BOLD_CYAN"   Programmer:      "BOLD_YELLOW"%s\n\n", options.programmer);
+	printf(BOLD_CYAN"   Project Name:     "BOLD_YELLOW"\"%s\"\n", options.project_name);
+	printf(BOLD_CYAN"   Git Repository:   "BOLD_YELLOW"%s\n", options.create_git ? "Yes":"No");
+	printf(BOLD_CYAN"   Blink Template:   "BOLD_YELLOW"%s\n", options.blink_template ? "Yes":"No");
+	printf(BOLD_CYAN"   Microcontroller:  "BOLD_YELLOW"%s\n", options.device);
+	printf(BOLD_CYAN"   CPU Frequency:    "BOLD_YELLOW"%s\n", options.f_cpu);
+	printf(BOLD_CYAN"   Low Fuse:         "BOLD_YELLOW"%s\n", options.low_f);
+	printf(BOLD_CYAN"   High Fuse:        "BOLD_YELLOW"%s\n", options.high_f);
+	printf(BOLD_CYAN"   Extended Fuse:    "BOLD_YELLOW"%s\n", options.extended_f);
+	printf(BOLD_CYAN"   Programmer:       "BOLD_YELLOW"%s\n", options.programmer);
+	printf(BOLD_CYAN"   ABOS Port:        "BOLD_YELLOW"%s\n", options.abos_port);
+	printf(BOLD_CYAN"   ABOS Baudrate:    "BOLD_YELLOW"%s\n", options.abos_baudrate);
+	printf("\n");
 
 	return 0;
 }
@@ -96,10 +100,11 @@ void create_makefile(options_t *options)
 	strcat(txt, "/Makefile");
 	f = fopen(txt, "w");
 	
-	fwrite(makefile_header,sizeof(char), strlen(makefile_header), f);
-	fprintf(f, "\nPROJECT_NAME = %s\nDEVICE       = %s\nCLOCK        = %s\nFUSES        = -U hfuse:w:0x%s:m -U lfuse:w:0x%s:m #-U efuse:w:0x%s:m\nAVRDUDE_PROG = -c %s -P usb",
-	options->project_name, options->device, options->f_cpu, options->high_f, options->low_f, options->extended_f, options->programmer);
-	fwrite(makefile_body,sizeof(char), strlen(makefile_body), f);
+	
+	fwrite(makefile_apos_header,sizeof(char), strlen(makefile_apos_header), f);
+	fprintf(f, "\nPROJECT_NAME  = %s\nDEVICE        = %s\nCLOCK         = %s\nFUSES         = -U hfuse:w:0x%s:m -U lfuse:w:0x%s:m #-U efuse:w:0x%s:m\nAVRDUDE_PROG  = -c %s -P usb\nABOS_PORT     = %s\nABOS_BAUDRATE = %s",
+	options->project_name, options->device, options->f_cpu, options->high_f, options->low_f, options->extended_f, options->programmer, options->abos_port, options->abos_baudrate);
+	fwrite(makefile_apos_body,sizeof(char), strlen(makefile_apos_body), f);
 	
 	fclose(f);
 }

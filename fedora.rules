@@ -1,0 +1,11 @@
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2104", GROUP="users", MODE="0660" # AVRISP mkII
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2107", GROUP="users", MODE="0660" # AVR-Dragon
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2103", GROUP="users", MODE="0660" # JTAG ICE mkII
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2106", GROUP="users", MODE="0660" # STK600
+ATTR{idVendor}=="16c0", ATTR{idProduct}=="05dc", GROUP="users", MODE="0660" # USBASP von www.fischl.de
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2ffa", GROUP="users", MODE="0660" # AT90USB
+ATTR{idVendor}=="10c4", ATTR{idProduct}=="ea60", GROUP="users", MODE="0660" # AVR910
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2105", GROUP="users", MODE="0660" # AVR ONE
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="210d", GROUP="users", MODE="0660" # Atmel XPLAIN CDC Gateway
+ATTR{idVendor}=="03eb", ATTR{idProduct}=="2ffb", GROUP="users", MODE="0660" # AT90USB AVR DFU bootloader
+ATTR{idVendor}=="1781", ATTR{idProduct}=="0c9f", GROUP="users", MODE="0660" # usbtiny

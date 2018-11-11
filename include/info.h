@@ -19,10 +19,10 @@
 
 #include <stdio.h>
 
-#define VERSION  			"1.7.0"
+#define VERSION  			"1.8.0"
 #define AUTHOR  			"Alfredo Orozco de la Paz"
 #define AUTHOR_EMAIL		"alfredoopa@gmail.com"
-#define LAST_COMPILATION	"April 19 2018"
+#define LAST_COMPILATION	"November-10-2018"
 
 #define RED				"\x1B[31m"
 #define BOLD_RED		"\x1B[1;31m"
@@ -72,24 +72,27 @@ void show_help() {
 
 	printf(BOLD_YELLOW "--------------------------------------------\n\n" RESET);
 	printf(BOLD_YELLOW "   OPTIONS:\n\n" RESET);
+	printf(YELLOW "     -ap" RESET "      Define the ABOS Loader serial port (default: /dev/ttyUSB0)\n");
+	printf(YELLOW "     -ab" RESET "      Define the ABOS Loader baudrate (default: 38400)\n");
 	printf(YELLOW "     -b" RESET "       Create a blink project template\n");
-	printf(YELLOW "     -ef" RESET "      Define the Extended Fuse  (2 digit hex format)\n");
-	printf(YELLOW "     -f" RESET "       Define the CPU Frequency (in Hz)\n");
+	printf(YELLOW "     -f" RESET "       Define the CPU Frequency in Hz (default 16000000)\n");
 	printf(YELLOW "     -g" RESET "       Initialize a GIT repository in the project folder\n");
+	printf(YELLOW "     -ef" RESET "      Define the Extended Fuse  (2 digit hex format)\n");
 	printf(YELLOW "     -hf" RESET "      Define the High Fuse  (2 digit hex format)\n");
 	printf(YELLOW "     -lf" RESET "      Define the Low Fuse (2 digit hex format)\n");
-	printf(YELLOW "     -m" RESET "       Define the Microcontroller (e.g atmega328p)\n");
-	printf(YELLOW "     -p" RESET "       Define the avrdude programmer (usbasp, usbtiny, dragon_isp, etc.)\n");
+	printf(YELLOW "     -m" RESET "       Define the Microcontroller (default: atmega128)\n");
+	printf(YELLOW "     -p" RESET "       Define the avrdude programmer (default: usbtiny)\n");
 	printf(YELLOW "     -v" RESET "       Show the APOS version\n");
 	printf(YELLOW "     -h,-?,? " RESET " Show this help\n\n");
 	
 	printf(BOLD_CYAN "--------------------------------------------\n\n" RESET);
 	printf(BOLD_CYAN "   Makefile Options:\n\n" RESET);
+	printf(CYAN "     abos"  	 RESET "         Write the .hex file into the AVR flash memory using ABOS Loader\n");
 	printf(CYAN "     all"  	 RESET "          Compile all the source file and generates the .hex file\n");
 	printf(CYAN "     clean"   RESET "        Clean the project\n");
 	printf(CYAN "     eeprom"  RESET "       Write the .eep file into the AVR eeprom memory\n");
 	printf(CYAN "     erase"   RESET "        Erase the flash memory into the AVR\n");
-	printf(CYAN "     flash"   RESET "        Write the .hex file into the AVR flash memory\n");
+	printf(CYAN "     flash"   RESET "        Write the .hex file into the AVR flash memory usign avrdude\n");
 	printf(CYAN "     fuses"   RESET "        Program the low, high and extended fuses\n");
 	printf(CYAN "     install" RESET "      Program the fuses, flash memory and eeprom data into the AVR\n");
 	printf(CYAN "     reset"   RESET "        Resets the AVR microcontroller\n");
@@ -105,6 +108,7 @@ void show_help() {
 	printf("     Define CPU frequency:     " RED "apos " YELLOW "-m " RESET "atmega32 " YELLOW "-f " RESET "16000000 " CYAN "blink\n" RESET);
 	printf("     Define programmer:        " RED "apos " YELLOW "-m " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " CYAN "blink\n" RESET);
 	printf("     Define fuses:             " RED "apos " YELLOW "-m " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-p " RESET "usbtiny " YELLOW "-ef "RESET"ff "YELLOW"-lf "RESET"de "YELLOW"-hf "RESET"D9 "CYAN"blink\n" RESET);
+	printf("     Define ABOS params:       " RED "apos " YELLOW "-m " RESET "atmega32 " YELLOW "-f " RESET "16000000 " YELLOW "-ap "RESET"/dev/ttyACM0 "YELLOW "-ab " RESET "38400 "CYAN"blink\n" RESET);
 	printf("                \n");
 	printf(RESET" Created by " BOLD_CYAN "%s" MAGENTA " <" YELLOW "%s" MAGENTA ">\n\n" RESET, AUTHOR, AUTHOR_EMAIL);
 	

@@ -31,6 +31,8 @@ install: all apos
 	ln -f -s /opt/apos/apos /usr/local/bin/apos
 
 dev-debian:
+	apt-get remove modemmanager
+	adduser $USER dialout
 	apt-get install gcc-avr binutils-avr avr-libc avrdude
 	cp debian.rules /etc/udev/rules.d/90-avr.rules
 	udevadm control --reload

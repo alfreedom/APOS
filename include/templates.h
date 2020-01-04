@@ -19,11 +19,16 @@
  *   Written by Alfredo Orozco <alfredoopa@gmail.com>                         *
  *****************************************************************************/
 
+const char gitignore[] = "\n# Ignored files and foldes\
+\n*.o\
+\n*.elf\
+\n}\
+\n";
 const char empty_template_body[] = "\n *       Author:  YOUR_NAME\
 \n *      License:  YOUR_LICENSE\
 \n *\
 \n * Description:\
-\n *  YOUR PROGRAM DESCRIPTION HERE.\
+\n *  This is my program description..\
 \n * \
 \n *****************************************************/\
 \n#include <avr/io.h> \
@@ -31,8 +36,7 @@ const char empty_template_body[] = "\n *       Author:  YOUR_NAME\
 \n\
 \nvoid AVRInit()\
 \n{\
-\n	// YOUR CODE INITIALIZATION\
-\n\
+\n	// AVR Initialization\
 \n}\
 \n\
 \nint main()\
@@ -43,7 +47,7 @@ const char empty_template_body[] = "\n *       Author:  YOUR_NAME\
 \n	// Infinite loop\
 \n	while(1)\
 \n	{\
-\n		// YOUR CODE HERE\
+\n\
 \n	}\
 \n\
 \n	return 0;\
@@ -55,7 +59,7 @@ const char blink_program[] = "\n *       Author:  YOUR_NAME\
 \n *      License:  YOUR_LICENSE\
 \n *\
 \n * Description:\
-\n *  Blink 8 leds connected on the PORTB of the AVR.\
+\n *  Blink a led connected on the PORTG 0 of the AVR.\
 \n * \
 \n *****************************************************/\
 \n#include <avr/io.h> \
@@ -63,7 +67,7 @@ const char blink_program[] = "\n *       Author:  YOUR_NAME\
 \n\
 \nvoid AVRInit()\
 \n{\
-\n	DDRB = 0xFF;  // PORTB as Output\
+\n	DDRG = 0x01;  // PORTG 0 as Output\
 \n}\
 \n\
 \nint main()\
@@ -74,9 +78,9 @@ const char blink_program[] = "\n *       Author:  YOUR_NAME\
 \n	// Infinite loop\
 \n	while(1)\
 \n	{\
-\n		PORTB = 0xFF;     // PORTB High\
+\n		PORTG |= 0x01;     // PORTB 0 High\
 \n		_delay_ms(1000);  // Wait 1s\
-\n		PORTB = 0x00;     // PORTB Low\
+\n		PORTG &= ~0x01;     // PORTB 0 Low\
 \n		_delay_ms(1000);  // Wait 1s\
 \n	}\
 \n\
@@ -98,8 +102,8 @@ const char makefile_apos_body[] = "\
 \n#OBJECT_FILES += ./src/mySource.o\
 \n\
 \nINCLUDEPATHS =  -I .\
-\nINCLUDEPATHS += -I ./include\
-\n#INCLUDEPATHS += -I ./include/myFolder\
+\nINCLUDEPATHS += -I ./lib\
+\n#INCLUDEPATHS += -I ./myFolder\
 \n\
 \nCFLAGS = -ffunction-sections -fpermissive -std=c++11\
 \nLDFLAGS = -Wl,-gc-sections\
@@ -125,7 +129,7 @@ const char makefile_apos_body[] = "\
 \n	$(COMPILE) -S $< -o $@\
 \n\
 \nabos:	$(PROJECT_NAME).hex \
-\n	abosl --port=$(ABOS_PORT) --baudrate=$(ABOS_BAUDRATE) $(PROJECT_NAME).hex\
+\n	abosl --port=$(ABOS_PORT) --cpu $(DEVICE) --baudrate=$(ABOS_BAUDRATE) $(PROJECT_NAME).hex\
 \n\
 \nflash:	all\
 \n	$(AVRDUDE) -U flash:w:$(PROJECT_NAME).hex:i\

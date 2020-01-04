@@ -142,8 +142,15 @@ void create_mainfile(options_t *options)
 */
 void create_gitrepo(options_t *options)
 {
+	FILE *f;
 	sprintf(txt, "cd %s && git init && git add * && git commit -m \"Initial commit for APOS AVR project ~%s~\"",options->project_name, options->project_name);
 	system(txt);
+	// Creates .gitignore
+	strcpy(txt, options->project_name);
+	strcat(txt, "/.gitignore");
+	f = fopen(txt, "w");
+	fwrite(gitignore, sizeof(char), strlen(gitignore), f);
+	fclose(f);
 }
 
 /**
@@ -152,7 +159,7 @@ void create_gitrepo(options_t *options)
 void create_readme(options_t *options) 
 {
 		FILE *f;
-		// Creates RREADME.md
+		// Creates README.md
 		strcpy(txt, options->project_name);
 		strcat(txt, "/README.md");
 		f = fopen(txt, "w");
@@ -183,24 +190,20 @@ void create_project_folder(char* project_name)
 	}
 	// Creates the project folder with the name passed in the program arguments
 	mkdir(project_name, 0700);
-	// Creates the "include" folder
+	// Creates the "lib" folder
 	strcpy(txt, project_name);
-	strcat(txt, "/include");
-	mkdir(txt, 0700);
-	// Creates the "src" folder
-	strcpy(txt, project_name);
-	strcat(txt, "/src");
+	strcat(txt, "/lib");
 	mkdir(txt, 0700);
 }
 
 void create_project(options_t *options) 
 {
 	create_project_folder(options->project_name);
+	if(options->create_git)
+		create_gitrepo(options);
 	create_makefile(options);
 	create_mainfile(options);
 	create_readme(options);
-	if(options->create_git)
-		create_gitrepo(options);
 
 }
 

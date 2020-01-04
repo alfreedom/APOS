@@ -119,18 +119,18 @@ This will create a folder containing the main.c file, the folders 'src', 'includ
 
 #### APOS options
 
-	-ap         Define the ABOS Loader serial port (default: /dev/ttyUSB0)
-	-ab         Define the ABOS Loader baudrate (default: 38400)
 	-b          Creates a blink project template
-	-m          Define the Microcontroller (default: atmega128)
-	-ef         Defines the Extended Fuse  (2 digit hex format)
+	-c          Defines the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)
+	-e          Defines the Extended Fuse  (2 digit hex format)
 	-f          Define the CPU Frequency in Hz (default 16000000)
 	-g          Initialize a GIT repository in the project folder
-	-hf         Defines the High Fuse  (2 digit hex format)
-	-lf         Defines the Low Fuse (2 digit hex format)
-	-p          Defines the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)
+	-h          Defines the High Fuse  (2 digit hex format)
+	-l          Defines the Low Fuse (2 digit hex format)
+	-m          Define the Microcontroller (default: atmega128)
+	-p          Define the ABOS Loader serial port (default: /dev/ttyUSB0)
+	-s          Define the ABOS Loader baudrate (default: 38400)
 	-v          Shows the apos version
-	-h, -?, ?   Shows help
+	-?, ?       Shows help
 
 #### Project creation
 To create a empty project, type in a terminal the command:

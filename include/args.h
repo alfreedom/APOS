@@ -48,7 +48,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 
 	memset(options_out, 0, sizeof(options_t));
 	// Set the default options
-	strcpy(options_out->device, "atmega128a");
+	strcpy(options_out->device, "atmega128");
 	strcpy(options_out->f_cpu, "16000000");
 	strcpy(options_out->programmer, "usbtiny");
 	strcpy(options_out->high_f, "D9");
@@ -87,43 +87,27 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 					}
 				break;
 				// ABOS Options
-				case 'a': 
-					if(!option[2] || (option[2] != 'p' && option[2] != 'b'))
-					{
-						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
-						return 0;
-					}
-
-					if(option[2] == 'p')
-					{
-						if(i+1 < argc && argv[i+1][0] != '-') 
-							strcpy(options_out->abos_port, argv[i+1]);
-						else
-						{
-							printf(RED "apos" RESET ": [" YELLOW "error" RESET "] ABOS Serial Port not specified in -ap option\n\n" RESET);
-							return 0;
-						}
-					}
+				case 's': 
+					if(i+1 < argc && argv[i+1][0] != '-') 
+						strcpy(options_out->abos_baudrate, argv[i+1]);
 					else
-					if(option[2] == 'b')
 					{
-						if(i+1 < argc && argv[i+1][0] != '-') 
-							strcpy(options_out->abos_baudrate, argv[i+1]);
-						else
-						{
-							printf(RED "apos" RESET ": [" YELLOW "error" RESET "] ABOS Serial Port not specified in -ap option\n\n" RESET);
-							return 0;
-						}
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] ABOS Serial Port not specified in -s option\n\n" RESET);
+						return 0;
 					}
 
 				break;
-				// Low Fuse Option
-				case 'l': 
-					if(!option[2] || option[2] != 'f')
+				case 'p':
+					if(i+1 < argc && argv[i+1][0] != '-') 
+						strcpy(options_out->abos_port, argv[i+1]);
+					else
 					{
-						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] ABOS Serial Port not specified in -p option\n\n" RESET);
 						return 0;
 					}
+				break;
+				// Low Fuse Option
+				case 'l': 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 					{
 						strcpy(options_out->low_f, argv[i+1]);
@@ -151,16 +135,6 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 				break;
 				// High Fuse Option
 				case 'h':
-					if(!option[2])
-					{
-						options_out->help = 1;
-					}
-					else
-					if(option[2] != 'f')
-					{
-						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
-						return 0;
-					} 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 					{
 						strcpy(options_out->high_f, argv[i+1]);
@@ -188,11 +162,6 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 				break;
 				// Extended Fuse Option
 				case 'e':
-					if(!option[2] || option[2] != 'f')
-					{
-						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
-						return 0;
-					} 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 					{
 						strcpy(options_out->extended_f, argv[i+1]);
@@ -228,7 +197,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 						return 0;
 					}
 				break;
-				case 'p': 
+				case 'c': 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->programmer, argv[i+1]);
 					else

@@ -1,5 +1,23 @@
 # APOS Changelog
 
+## [ 2.0.0 ] - JAN 2020
+
+#### Updated
+  - Update examples in help screen.
+  - Minor updates to default blink and makefile templates.
+
+#### Changed
+  - Change the name of command options to be only one letter.
+     - avrdude programmer option "-p" now is "-c"
+     - abos loader port option "-ap" now is "-p"
+     - abos loader baudrate option "-ab" now is "-s"
+     - extended fuse option "-ef" now is "-e"
+     - high fuse option "-hf" now is "-h"
+     - low fuse option "-lf" now is "-l"
+
+#### Added
+- Add default .gitignore file to proyectfolder with -g option.
+
 ## [ 1.8.0 ] - 2018-11-10
 
 #### Added

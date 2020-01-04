@@ -150,23 +150,26 @@ If you want to create a git repository, add the "-g" option before the project n
 To specify the abos loader serial port and baudrate add -p and -s respectively:
 
 ```bash
-$ apos -d atmega328p -f 16000000 -c usbtiny -p /dev/ttyUSB0 -s 38400 my_proyect
+$ apos -d atmega128 -f 16000000 -c usbtiny -p /dev/ttyUSB0 -s 38400 my_proyect
 ```
 
 <br>
+
 #### Project Configuration
-Do you need to change the microcontroller frequency, model, programmer, fuses or another configuration? you only need to edit the lines from 6 to 12 of the project Makefile.
+Do you need to change the microcontroller frequency, model, programmer, fuses or another configuration? you only need to edit the lines from 6 to 14 of the project Makefile.
 
 ```Makefile
  5
- 6 PROJECT_NAME = my_project
- 7 DEVICE       = atmega32
- 8 CLOCK        = 16000000
- 9 FUSES        = -U hfuse:w:0xD1:m -U lfuse:w:0xDE:m #-U efuse:w:0xFF:m
-10 AVRDUDE      = avrdude
-11 AVRDUDE_PROG = -c usbtiny -P usb
-12 AVRDUDE_OPS  = -B 0.5 -D
-13
+ 6 PROJECT_NAME  = my_project
+ 7 DEVICE        = atmega128
+ 8 CLOCK         = 16000000
+ 9 FUSES         = -U hfuse:w:0xD9:m -U lfuse:w:0xFF:m #-U efuse:w:0xFF:m
+10 AVRDUDE_PROG  = -c usbtiny -P usb
+11 ABOS_PORT     = /dev/tty.usbserial-1A12430
+12 ABOS_BAUDRATE = 38400
+13 AVRDUDE_OPS   = -B 0.5
+14 AVRDUDE       = avrdude -p $(DEVICE) $(AVRDUDE_PROG) $(AVRDUDE_OPS)
+15
 
 ```
 #### Project Compilation 
@@ -183,14 +186,14 @@ Adding you own hardware drivers and libraries is very simple, only put your head
 The final step is uncomment and copy the lines 15 and 19 of the 'Makefile' to add your source files and include paths.
 
 ```Makefile
-13
-14 OBJECT_FILES = main.o
-15 #OBJECT_FILES += ./src/mySource.o
-16
-17 INCLUDEPATHS =  -I .
-18 INCLUDEPATHS =  -I ./include
-19 #INCLUDEPATHS += -I ./include/myFolder
-20
+15
+16 OBJECT_FILES = main.o
+17 #OBJECT_FILES += ./src/mySource.o
+18
+19 INCLUDEPATHS =  -I .
+20 INCLUDEPATHS =  -I ./lib
+21 #INCLUDEPATHS += -I ./myFolder
+22
 ```
 
 Save changes and type "make" to compile your new code.

@@ -143,9 +143,16 @@ Also, you could be defined another project params like the AVR Microcontroller m
 To create a project for the ATmega328 that run at 16MHz and will be flashed with a USBtiny programmer, type in a terminal the command:
 
 ```bash
-$ apos -d atmega328p -f 16000000 -p usbtiny my_proyect
+$ apos -d atmega328p -f 16000000 -c usbtiny my_proyect
 ```
 If you want to create a git repository, add the "-g" option before the project name. In the same way add the "-b" option if you want to create the project with a blink program template.
+
+To specify the abos loader serial port and baudrate add -p and -s respectively:
+
+```bash
+$ apos -d atmega328p -f 16000000 -c usbtiny -p /dev/ttyUSB0 -s 38400 my_proyect
+```
+
 <br>
 #### Project Configuration
 Do you need to change the microcontroller frequency, model, programmer, fuses or another configuration? you only need to edit the lines from 6 to 12 of the project Makefile.

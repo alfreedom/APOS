@@ -48,12 +48,19 @@
 void show_version(){
 	printf("APOS v%s (AVR Project Open Source)\n", VERSION);
 }
+void show_usage(){
+	
+	printf(BOLD_RESET "\nUsage:" BOLD_RED " apos " RESET "[" BOLD_YELLOW "OPTIONS" RESET "] <" BOLD_CYAN "Project_Name" RESET ">\n\n");
+	printf(BOLD_YELLOW"-?"RESET " or" BOLD_YELLOW" ? "RESET"option shows help\n\n");
+
+}
 
 /**
  * Shows the APOS help in the command line
 */
 void show_help() {
 	show_version();
+
 	printf("\n");
 	printf( BOLD_MAGENTA "      ___           ___           ___           ___     									\n");
 	printf("     /\\  \\         /\\  \\         /\\  \\         /\\  \\    						\n");
@@ -66,10 +73,10 @@ void show_help() {
 	printf(BOLD_YELLOW"      /:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  /  								\n");
 	printf("     /:/  /                     \\::/  /       \\::/  /   \n");
 	printf("     \\/__/                       \\/__/         \\/__/    \n\n");
+	printf(BOLD_CYAN " Creates an AVR project template based on a makefile.\n");
+	printf(BOLD_CYAN " Uses the avr-gcc toolchain and avrdude.\n");
 
-	printf(BOLD_CYAN " Creates an AVR project template based on a makefile.\n Uses the avr-gcc toolchain and avrdude.\n\n");
-	printf(BOLD_RESET "   Usage:" BOLD_RED " apos " RESET "[" BOLD_YELLOW "OPTIONS" RESET "] <" BOLD_CYAN "Project_Name" RESET ">\n\n");
-	printf(BOLD_YELLOW"   -?"RESET","BOLD_YELLOW " -h" RESET " or" BOLD_YELLOW" ? "RESET"option shows help\n\n");
+	show_usage();
 
 	printf(BOLD_YELLOW "--------------------------------------------\n\n" RESET);
 	printf(BOLD_YELLOW "   OPTIONS:\n\n" RESET);
@@ -84,7 +91,7 @@ void show_help() {
 	printf(YELLOW "     -p" RESET "       Define the ABOS Loader serial port (default: /dev/ttyUSB0)\n");
 	printf(YELLOW "     -s" RESET "       Define the ABOS Loader baudrate (default: 38400)\n");
 	printf(YELLOW "     -v" RESET "       Show the APOS version\n");
-	printf(YELLOW "     -?,? " RESET " Show this help\n\n");
+	printf(YELLOW "     -?, ? " RESET "   Show this help\n\n");
 	
 	printf(BOLD_CYAN "--------------------------------------------\n\n" RESET);
 	printf(BOLD_CYAN "   Makefile Options:\n\n" RESET);

@@ -49,6 +49,7 @@ int main(int argc, char const *argv[])
 	// If not pass arguments to program show the help
 	if(argc < 2) {
 		show_version();
+		show_usage();
 		return 0;
 	}
 

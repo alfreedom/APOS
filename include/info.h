@@ -1,7 +1,7 @@
 /******************************************************************************
  *   file: info.h                                                             *
  *                                                                            *
- *	 APOS                                                                     *
+ *	 AVR Project Open Source (APOS)                                                                      *
  *                                                                            *
  *   This program is free software: you can redistribute it and/or modify     *
  *   it under the terms of the GNU General Public License as published by     *
@@ -109,7 +109,7 @@ void show_help() {
 	printf(CYAN "     diasam"  RESET "       Disassemble the .hex file and generate the .asm file\n\n");
 	
 	printf(BOLD_MAGENTA "--------------------------------------------\n\n" RESET);
-	printf(BOLD_MAGENTA "   Examples: create a blink project\n\n" RESET);
+	printf(BOLD_MAGENTA "   Examples:\n\n" RESET);
 	printf("     Empty project:            " RED "apos " CYAN "example\n" RESET);
 	printf("     With git repository:      " RED "apos " YELLOW "-g " CYAN "example\n" RESET);
 	printf("     Using usbtiny programmer: " RED "apos " YELLOW "-c " RESET "usbtiny " CYAN "example\n" RESET);

@@ -17,6 +17,7 @@
 
 #### Added
 - Add default .gitignore file to proyectfolder with -g option.
+- Add man page (1), now shows apos manual with *man apos*
 
 ## [ 1.8.0 ] - 2018-11-10
 

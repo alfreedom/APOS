@@ -1,8 +1,8 @@
 # APOS (AVR Project Open Source)
 
-Creates an AVR project template for Linux systems based on a Makefile.
+Creates an AVR project template for Unix/Linux systems based on a Makefile.
 
-This project is inspired by the avr-proj program Thatcher is incluye in the CrossPack AVR software package for MacOS.
+This project is inspired by the avr-proj program that is include in the CrossPack AVR software package for MacOS.
 
 It offers a free alternative with improvements and extra options, which works with Linux operating systems in a simple but very useful program.
 
@@ -73,8 +73,12 @@ $ sudo yum install  avr-gcc avr-binutils avr-libc avrdude
 ```bash
 $ sudo pacman -Sy  avr-gcc avr-binutils avr-libc avrdude
 ```
+##### Mac OS
+```bash
+$ brew install avrdude avr-gcc avr-binutils avr-libc
+```
 
-## Add udev rules
+## Add udev rules (only Linux)
 
 To use the hardware programmers with avrdude without root permissions, 
 it is necessary to add the rules of programmers to the system. Depending 
@@ -156,7 +160,7 @@ $ apos -d atmega128 -f 16000000 -c usbtiny -p /dev/ttyUSB0 -s 38400 my_proyect
 <br>
 
 #### Project Configuration
-Do you need to change the microcontroller frequency, model, programmer, fuses or another configuration? you only need to edit the lines from 6 to 14 of the project Makefile.
+If you need to change the microcontroller frequency, model, programmer, fuses or another configuration,  edit the lines from 6 to 14 of the project Makefile.
 
 ```Makefile
  5
@@ -181,14 +185,14 @@ $ make
 If all is ok, the compilation information will be shown in the terminal with usage data from the flash memory, ram and eeprom.
 <br>
 #### Add new sources to project 
-Adding you own hardware drivers and libraries is very simple, only put your header file in the 'include' folder or another subfolder, and the source files in the 'src' folder or subfolder.
+Adding you own hardware drivers and libraries is very simple, only put your header and source files in the 'lib' directory or another directory.
 
 The final step is uncomment and copy the lines 15 and 19 of the 'Makefile' to add your source files and include paths.
 
 ```Makefile
 15
 16 OBJECT_FILES = main.o
-17 #OBJECT_FILES += ./src/mySource.o
+17 #OBJECT_FILES += ./lib/mySource.o
 18
 19 INCLUDEPATHS =  -I .
 20 INCLUDEPATHS =  -I ./lib
@@ -201,6 +205,7 @@ Save changes and type "make" to compile your new code.
 *****
 
 ## Makefile targets 
+
 #### Compile the code
 To compile the source code type the command:
 ```bash

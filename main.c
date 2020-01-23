@@ -1,7 +1,7 @@
 /******************************************************************************
  *   file: main.c                                                             *
  *                                                                            *
- *	 APOS                                                                     *
+ *	 AVR Project Open Source (APOS)                                                                      *
  *                                                                            *
  *   This program is free software: you can redistribute it and/or modify     *
  *   it under the terms of the GNU General Public License as published by     *
@@ -105,9 +105,9 @@ void create_makefile(options_t *options)
 	
 	
 	fwrite(makefile_apos_header,sizeof(char), strlen(makefile_apos_header), f);
-	fprintf(f, "\nPROJECT_NAME  = %s\nDEVICE        = %s\nCLOCK         = %s\nFUSES         = -U hfuse:w:0x%s:m -U lfuse:w:0x%s:m #-U efuse:w:0x%s:m\nAVRDUDE_PROG  = -c %s -P usb\nABOS_PORT     = %s\nABOS_BAUDRATE = %s",
+	fprintf(f, "\nPROJECT_NAME  = %s\nDEVICE        = %s\nCLOCK         = %s\nFUSES         = -U hfuse:w:0x%s:m -U lfuse:w:0x%s:m -U efuse:w:0x%s:m\nAVRDUDE_PROG  = -c %s -P usb\nABOS_PORT     = %s\nABOS_BAUDRATE = %s",
 	options->project_name, options->device, options->f_cpu, options->high_f, options->low_f, options->extended_f, options->programmer, options->abos_port, options->abos_baudrate);
-	fwrite(makefile_apos_body,sizeof(char), strlen(makefile_apos_body), f);
+	fwrite(makefile_apos_body, sizeof(char), strlen(makefile_apos_body), f);
 	
 	fclose(f);
 }
@@ -125,16 +125,13 @@ void create_mainfile(options_t *options)
 	strcpy(txt, options->project_name);
 	strcat(txt, "/main.c");
 	f = fopen(txt, "w");
+	fprintf(f,"/******************************************************\n * main.c\n *\n * Program Name:  %s\n *         Date:  %04d-%02d-%02d", options->project_name, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday );
+	
 	if(options->blink_template)
-	{
-		fprintf(f,"/******************************************************\n * main.c\n *\n * Program Name:  Blink\n *         Date:  %04d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday );
 		fwrite(blink_program, sizeof(char), strlen(blink_program), f);
-	}
 	else
-	{
-		fprintf(f,"/******************************************************\n * main.c\n *\n * Program Name:  %s\n *         Date:  %04d-%02d-%02d", options->project_name, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday );
 		fwrite(empty_template_body, sizeof(char), strlen(empty_template_body), f);
-	}
+
 	fclose(f);
 }
 
@@ -183,7 +180,7 @@ void create_project_folder(char* project_name)
 			project_name[i]= '_';
 	}
 
-	if(f=fopen(project_name, "r"))
+	if((f=fopen(project_name, "r")))
 	{
 		printf(BOLD_RED "\napos" RESET ": [" YELLOW "error" RESET "] the project " BOLD_YELLOW "\"%s\"" RESET " already exist!\n\n", project_name);
 		fclose(f);

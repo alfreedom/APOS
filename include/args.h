@@ -1,7 +1,7 @@
 /******************************************************************************
  *   file: args.h                                                             *
  *                                                                            *
- *	 APOS                                                                     *
+ *	 AVR Project Open Source (APOS)                                                                     *
  *                                                                            *
  *   This program is free software: you can redistribute it and/or modify     *
  *   it under the terms of the GNU General Public License as published by     *
@@ -129,7 +129,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 					}
 					else
 					{
-						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] Low Fuse not specified in -lf option\n\n" RESET);
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] Low Fuse not specified in -l option\n\n" RESET);
 						return 0;
 					}
 				break;
@@ -156,7 +156,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 					}
 					else
 					{
-						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] High Fuse not specified in -hf option\n\n" RESET);
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] High Fuse not specified in -h option\n\n" RESET);
 						return 0;
 					}
 				break;
@@ -183,7 +183,7 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 					}
 					else
 					{
-						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] Extended Fuse not specified in -ef option\n\n" RESET);
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] Extended Fuse not specified in -e option\n\n" RESET);
 						return 0;
 					}
 				break;

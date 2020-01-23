@@ -1,0 +1,134 @@
+.\" Manpage for nuseradd.
+.\" Contact cdvivek@nixcraft.net.in to correct errors or typos.
+
+.TH apos 1 "11 Jan 2020" "v2.0.0" "apos man page"
+
+.SH NAME
+apos -- create an empty project for AVR microcontrollers.
+
+.SH SYNOPSIS
+apos [OPTIONS] <project_name>
+
+.SH DESCRIPTION
+.B apos
+creates an AVR microcontroller project template for Unix/Linux systems based on a Makefile using 
+.BR avr-gnu " toolchain (avr-g++)", 
+.BR avrdude " and" 
+.BR make " to build aund upload the .hex file into microcontroller."
+
+.PP
+This project is inspired in the 
+.BR avr-proj " program That is include in the CrossPack AVR software package for MacOS."
+It offers a free alternative with improvements and extra options, which works with Linux and MacOS operating systems in a simple but very useful program.
+
+.PP 
+apos creates a folder with the given project name. Inside the folder the
+.BR main.c ", " Makefile " and " README.md " files are created, along with the lib folder."
+
+.PP
+If you need to change the microcontroller frequency, model, programmer, fuses or another configuration,  edit the lines from 6 to 14 of the project Makefile:
+
+  ...
+  5
+  6 PROJECT_NAME  = my_project
+  7 DEVICE        = atmega128
+  8 CLOCK         = 16000000
+  9 FUSES         = -U hfuse:w:0xD9:m -U lfuse:w:0xFF:m #-U efuse:w:0xFF:m
+ 10 AVRDUDE_PROG  = -c usbtiny -P usb
+ 11 ABOS_PORT     = /dev/tty.usbserial-1A12430
+ 12 ABOS_BAUDRATE = 38400
+ 13 AVRDUDE_OPS   = -B 0.5
+ 14 AVRDUDE       = avrdude -p $(DEVICE) $(AVRDUDE_PROG) $(AVRDUDE_OPS)
+ 15
+ ...
+
+.PP
+Adding you own hardware drivers and libraries is very simple, only put your header and source files in the 'lib' directory or another directory.
+
+The final step is uncomment and copy the lines 15 and 19 of the 'Makefile' to add your source files and include paths:
+ 
+ ...
+ 15
+ 16 OBJECT_FILES = main.o
+ 17 #OBJECT_FILES += ./src/mySource.o
+ 18
+ 19 INCLUDEPATHS =  -I .
+ 20 INCLUDEPATHS =  -I ./lib
+ 21 #INCLUDEPATHS += -I ./myFolder
+ 22
+ ...
+
+.SH OPTIONS
+
+-b          Creates a blink project template
+
+-c          Defines the avrdude programmer (e.g usbasp, usbtiny, dragon_isp, etc.)
+
+-e          Defines the Extended Fuse  (2 digit hex format)
+
+-f          Define the CPU Frequency in Hz (default 16000000)
+
+-g          Initialize a GIT repository in the project folder
+
+-h          Defines the High Fuse  (2 digit hex format)
+
+-l          Defines the Low Fuse (2 digit hex format)
+
+-m          Define the Microcontroller (default: atmega128)
+
+-p          Define the ABOS Loader serial port (default: /dev/ttyUSB0)
+
+-s          Define the ABOS Loader baudrate (default: 38400)
+
+-v          Shows the apos version
+
+-?, ?       Shows apos help
+
+.SH MAKE TARGETS
+ 
+make               Compile the source code.
+
+make all           Same as make.
+
+make clean         Clean all the compiled output files.
+
+make reset         Reset the AVR microcontroller using avrdude.
+
+make flash         Upload the generated .hex file into AVR microcontroller using avrdude.
+
+make read_flash    Reads the AVR microcontroller flash memory and save its content in "*.flash.bin" file.
+
+make fuses         Program the specified fuses into the AVR microcontroller.
+
+make install       Program the fuses bits, flash and eeprom memories into the AVR microcontroller.
+
+make eeprom        Program the eeprom memori with the .eep generated file.
+
+make read_eeprom   Reads the AVR microcontroller eeprom memory and save its content in "*.eeprom.bin file.
+
+make erase         Erase the flash memory in the AVR microcontroller using avrdude.
+
+make disasm        Disassemble the .elf generated file.
+
+make abos          Load the .hex file with the
+.BR abosldr " command (if the ABOS bootloader is installed in the AVR)"
+
+.SH EXAMPLES
+  Empty project:              apos example
+  With git repository:        apos -g example
+  Using usbtiny programmer:   apos -c usbtiny example
+  Create a Blink project:     apos -b blink
+  Define MCU:                 apos -m atmega32 example
+  Define CPU frequency:       apos -m atmega32 -f 16000000 example
+  Define programmer:          apos -m atmega32 -f 16000000 -p usbtiny example
+  Define fuses:               apos -m atmega32 -f 16000000 -p usbtiny -e ff -l de -h D9 example
+  Define ABOS params:         apos -m atmega32 -f 16000000 -p /dev/ttyACM0 -s 38400 exampleq
+
+.SH BUGS
+No known bugs.
+
+.SH AUTHOR
+Alfredo Orozco (alfredoopa@gmail.com)
+
+.SH SEE ALSO
+abosldr(1), avrdude(1), avr-gcc(1)

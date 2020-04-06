@@ -49,7 +49,7 @@ $ sudo make install
 The default installation path is /opt/apos/. To check the installation run the command apos -? 
 
 ```bash
-$ apos -?
+$ apos --help
 ```
 or
 ```bash
@@ -134,7 +134,7 @@ This will create a folder containing the main.c file, the folders 'src', 'includ
 	-p          Define the ABOS Loader serial port (default: /dev/ttyUSB0)
 	-s          Define the ABOS Loader baudrate (default: 38400)
 	-v          Shows the apos version
-	-?, ?       Shows help
+	--help      Shows help
 
 #### Project creation
 To create a empty project, type in a terminal the command:

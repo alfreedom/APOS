@@ -32,10 +32,9 @@ install: all apos
 	cp apos.1 /usr/local/share/man/man1/
 	
 install-osx: all apos
-	mkdir -p /opt/apos
-	cp apos /opt/apos
-	ln -f -s /opt/apos/apos /usr/local/bin/apos
-	cp apos.1 /usr/local/share/man/man1/
+	mkdir -p ~/Library/apos
+	cp apos ~/Library/apos
+	ln -sf ~/Library/apos/apos /usr/local/bin/apos
 
 dev-debian:
 	apt-get remove modemmanager

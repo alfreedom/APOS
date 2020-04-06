@@ -75,7 +75,8 @@ $ sudo pacman -Sy  avr-gcc avr-binutils avr-libc avrdude
 ```
 ##### Mac OS
 ```bash
-$ brew install avrdude avr-gcc avr-binutils avr-libc
+$ brew tap osx-cross/avr
+$ brew install avrdude avr-gcc avr-binutils
 ```
 
 ## Add udev rules (only Linux)

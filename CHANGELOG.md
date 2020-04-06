@@ -1,5 +1,13 @@
 # APOS Changelog
 
+## [ 2.0.1 ] - APR 2020
+
+#### Updated
+  - Update the installation path for OSx.
+
+#### Update
+  - Change the help option, now is only --help. -? and ? cause problems in szh terminal.
+
 ## [ 2.0.0 ] - JAN 2020
 
 #### Updated

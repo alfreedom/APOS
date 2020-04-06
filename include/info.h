@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 
-#define VERSION  			"2.0.0"
+#define VERSION  			"2.0.1"
 #define AUTHOR  			"Alfredo Orozco de la Paz"
 #define AUTHOR_EMAIL		"alfredoopa@gmail.com"
 
@@ -51,7 +51,7 @@ void show_version(){
 void show_usage(){
 	
 	printf(BOLD_RESET "\nUsage:" BOLD_RED " apos " RESET "[" BOLD_YELLOW "OPTIONS" RESET "] <" BOLD_CYAN "Project_Name" RESET ">\n\n");
-	printf(BOLD_YELLOW"-?"RESET " or" BOLD_YELLOW" ? "RESET"option shows help\n\n");
+	printf("Use"BOLD_YELLOW" --help"RESET" option to show help\n\n");
 
 }
 
@@ -91,7 +91,7 @@ void show_help() {
 	printf(YELLOW "     -p" RESET "       Define the ABOS Loader serial port (default: /dev/ttyUSB0)\n");
 	printf(YELLOW "     -s" RESET "       Define the ABOS Loader baudrate (default: 38400)\n");
 	printf(YELLOW "     -v" RESET "       Show the APOS version\n");
-	printf(YELLOW "     -?, ? " RESET "   Show this help\n\n");
+	printf(YELLOW "     --help" RESET "   Show this help\n\n");
 	
 	printf(BOLD_CYAN "--------------------------------------------\n\n" RESET);
 	printf(BOLD_CYAN "   Makefile Options:\n\n" RESET);

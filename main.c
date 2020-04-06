@@ -67,7 +67,7 @@ int main(int argc, char const *argv[])
 	}
 
 	if(!parse_result){
-		printf("Write  apos " YELLOW "?" RESET " or " YELLOW "-?" RESET "  to see help.\n");
+		printf("Use"BOLD_YELLOW" --help"RESET" option to show help\n\n");
 		return 0;
 	}
 

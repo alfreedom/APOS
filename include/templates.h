@@ -59,7 +59,7 @@ const char blink_program[] = "\n *       Author:  YOUR_NAME\
 \n *      License:  YOUR_LICENSE\
 \n *\
 \n * Description:\
-\n *  Blink a led connected on the PORTG 0 of the AVR.\
+\n *  Blink a led connected on the PORTG 0 of the ATmega.\
 \n * \
 \n *****************************************************/\
 \n#include <avr/io.h> \

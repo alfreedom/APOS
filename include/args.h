@@ -77,6 +77,26 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 			}
 			switch(option[1]){
 				// Microcontroller Option
+				case '-':
+					if(strlen(option) > 2)
+					{
+						if(!strcmp("help", &option[2]))
+						{
+							options_out->help = 1;
+							return 1;
+						}
+						else
+						{
+							printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
+							return 0;
+						}
+					}
+					else
+					{
+						printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
+						return 0;
+					}
+				break;
 				case 'm': 
 					if(i+1 < argc && argv[i+1][0] != '-') 
 						strcpy(options_out->device, argv[i+1]);
@@ -215,8 +235,9 @@ int parse_args(int argc, char const *argv[], options_t *options_out){
 				// Git Repository Option
 				case 'g': options_out->create_git = 1; break;
 				// Invalid Option
-				default: printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
-								 return 0;
+				default: 
+					printf(RED "apos" RESET ": [" YELLOW "error" RESET "] invalid option " CYAN "%s\n\n" RESET, argv[i]);
+					return 0;
 				
 			}
 		}

@@ -135,7 +135,7 @@ This will create a folder containing the main.c file, the folders 'src', 'includ
 	-p          Define the ABOS Loader serial port (default: /dev/ttyUSB0)
 	-s          Define the ABOS Loader baudrate (default: 38400)
 	-v          Shows the apos version
-	--help      Shows help
+	--help      Show this help
 
 #### Project creation
 To create a empty project, type in a terminal the command:
@@ -143,25 +143,25 @@ To create a empty project, type in a terminal the command:
 ```bash
 $ apos my_proyect
 ```
-Also, you could be defined another project params like the AVR Microcontroller model, the CPU Frequency, the fuses and the usb programmer. The program is able to create a blink example project and initialize the project with a Git repository,
+You can define another project params like the AVR Microcontroller model, the CPU Frequency, the fuses and the usb programmer. The program is able to create a blink example project and initialize the project with a Git repository.
 
 To create a project for the ATmega328 that run at 16MHz and will be flashed with a USBtiny programmer, type in a terminal the command:
 
 ```bash
-$ apos -d atmega328p -f 16000000 -c usbtiny my_proyect
+$ apos -m atmega328p -f 16000000 -c usbtiny my_proyect
 ```
 If you want to create a git repository, add the "-g" option before the project name. In the same way add the "-b" option if you want to create the project with a blink program template.
 
 To specify the abos loader serial port and baudrate add -p and -s respectively:
 
 ```bash
-$ apos -d atmega128 -f 16000000 -c usbtiny -p /dev/ttyUSB0 -s 38400 my_proyect
+$ apos -m atmega128 -f 16000000 -c usbtiny -p /dev/ttyUSB0 -s 38400 my_proyect
 ```
 
 <br>
 
 #### Project Configuration
-If you need to change the microcontroller frequency, model, programmer, fuses or another configuration,  edit the lines from 6 to 14 of the project Makefile.
+If you need to change the microcontroller frequency, model, programmer, fuses or another configuration, edit the lines from 6 to 14 in Makefile.
 
 ```Makefile
  5
@@ -274,7 +274,7 @@ $ make disasm
 ```
 ***
 
-Copyright © 2017-2020 Alfredo Orozco <alfredoopa@gmail.com>
+Copyright © 2017-2023 Alfredo Orozco <alfredoopa@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
